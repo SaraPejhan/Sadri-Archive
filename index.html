@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>بایگانی گروه صدری</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&family=Noto+Naskh+Arabic:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one narrow records-terminal column. Search on top, opened records stack below, newest first. */
+:root{
+  --bg:#0f1112;--panel:#171a1b;--line:#2a2f30;--ink:#d9d6cc;--muted:#8b8f8a;
+  --paper:#e8e2d2;--paper-ink:#2b2620;--seal:#b3352b;--ok:#6fae7a;
+  --font-ui:"Vazirmatn",Tahoma,sans-serif;--font-doc:"Noto Naskh Arabic","Vazirmatn",serif;--font-mono:"JetBrains Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--font-ui);font-size:16px;line-height:1.75}
+.wrap{direction:rtl;max-width:720px;margin:0 auto;padding-block:24px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
+header.mast{display:flex;flex-direction:column;gap:4px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;color:var(--muted);direction:ltr;text-align:right}
+h1{font-weight:800;font-size:26px;margin:0;text-wrap:balance}
+h2{font-weight:600;font-size:18px;margin:0}
+h3{font-weight:600;font-size:16px;margin:0}
+p{margin:0}
+.muted{color:var(--muted)}
+.search{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+form.code{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text]{flex:1 1 180px;min-width:0;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:10px 12px;font-family:var(--font-ui);font-size:17px}
+input[type=text]:focus{outline:2px solid var(--ink);outline-offset:1px}
+button{font-family:var(--font-ui);font-size:15px;background:var(--ink);color:var(--bg);border:0;border-radius:4px;padding:10px 18px;cursor:pointer}
+button:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+button.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);padding:6px 12px;font-size:13px}
+button:disabled{opacity:.4;cursor:not-allowed}
+.msg{font-size:14px;min-height:1.4em}
+.msg.bad{color:#e07a6e}.msg.good{color:var(--ok)}
+.records{display:flex;flex-direction:column;gap:18px}
+.rec{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.rec.new{border-color:var(--ink)}
+.rec-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.tag{font-family:var(--font-mono);font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid var(--line);color:var(--muted);direction:ltr}
+.doc{background:var(--paper);color:var(--paper-ink);font-family:var(--font-doc);border-radius:2px;padding:18px;line-height:2;display:flex;flex-direction:column;gap:8px}
+.doc .meta{font-family:var(--font-ui);font-size:12px;opacity:.7}
+.stamp{align-self:flex-start;border:2px solid var(--seal);color:var(--seal);font-family:var(--font-ui);font-weight:800;font-size:12px;padding:2px 10px;transform:rotate(-4deg)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;font-family:var(--font-ui)}
+th,td{border-bottom:1px solid rgba(43,38,32,.25);padding:6px;text-align:right;vertical-align:top}
+th{font-weight:600;font-size:12px;opacity:.75}
+.num{font-family:var(--font-mono);direction:ltr;unicode-bidi:isolate}
+.order{border:1px solid var(--seal);background:rgba(179,53,43,.1);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.order b{color:#ecaaa2}
+.hints{display:flex;flex-direction:column;gap:6px}
+.hint{font-size:14px;color:var(--muted);border-right:2px solid var(--line);padding-right:10px}
+.tape{background:#0a0b0b;border:1px solid var(--line);border-radius:4px;padding:14px;display:flex;flex-direction:column;gap:8px;font-family:var(--font-doc)}
+.tape .h{font-family:var(--font-mono);font-size:12px;color:var(--muted);direction:ltr;text-align:right}
+.tape .n{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.tape .v1{color:#d9c48e}.tape .v2{color:#9ec3d6}.tape .v3{color:#e2a4c0}
+.clips{display:flex;flex-direction:column;gap:16px}
+.clip{display:flex;flex-direction:column;gap:6px}
+.clip canvas{width:100%;max-width:100%;aspect-ratio:16/9;background:#000;border-radius:3px;display:block}
+.clip-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.q{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts button{background:transparent;color:var(--ink);border:1px solid var(--line);text-align:right;padding:9px 12px}
+.opts button:hover:not(:disabled){border-color:var(--ink)}
+.letter{font-family:var(--font-doc);font-size:18px;line-height:2.1;display:flex;flex-direction:column;gap:14px}
+footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="mast">
+    <span class="eyebrow">SADRI GROUP · RECORDS ARCHIVE</span>
+    <h1>بایگانی اسناد گروه صدری</h1>
+    <p class="muted">هر پرونده یک شناسه دارد: شماره حساب، شماره کارمند، شماره پرونده، شماره تلفن یا آدرس. شناسه‌ها در مدارک شما هستند.</p>
+  </header>
+
+  <div class="search">
+    <form class="code" id="search"><input type="text" id="q" autocomplete="off" placeholder="شناسه را وارد کنید" aria-label="جستجوی شناسه"><button type="submit">جستجو</button></form>
+    <p class="msg" id="smsg" aria-live="polite"></p>
+  </div>
+
+  <section class="rec" id="hintbox">
+    <div class="rec-head"><h3>گیر کرده‌اید؟</h3></div>
+    <div class="hints" id="hints"></div>
+  </section>
+
+  <div class="records" id="records"></div>
+
+  <section class="rec" id="final" hidden>
+    <div class="rec-head"><h2>پرونده آخر: بازسازی حقیقت</h2></div>
+    <p>همه با هم حرف بزنید، بعد جواب بدهید. جواب اشتباه چند ثانیه قفل می‌کند.</p>
+    <div id="final-qs" class="clips"></div>
+    <div id="final-letter" hidden>
+      <div class="letter">
+        <p>همه‌اش را فهمیدید. حالا من هم می‌دانم.</p>
+        <p>اسم من لیلاست. آن عکس نیم‌سوخته را سی و چهار سال پیش گرفتیم. بچه‌ای که بغلم بود شهرام بود.</p>
+        <p>آن پیغام ساعت ۲۳:۵۱ را من گذاشتم. یک سال است هر شب گوشی‌ام را نگاه می‌کنم که شاید جواب بدهد.</p>
+        <p>دعوت‌نامه را من فرستادم، به اسم شهاب. می‌دانستم اگر اسم خودم را بنویسم، هیچ‌کدامتان نمی‌آیید.</p>
+        <p>مهرداد، تو نمی‌دانستی چه کسی را می‌زنی. این را می‌فهمم. شهاب، تو می‌دانستی چه کسی را زیر زمین می‌بری. این را نمی‌فهمم.</p>
+        <p>بقیه‌تان فقط آنجا بودید. گاهی همین کافی است که آدم یک سال ساکت بماند.</p>
+        <p>ل.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer><span class="num">ARCHIVE v3.1</span><button type="button" class="ghost" id="reset">شروع دوباره</button></footer>
+</div>
+
+<script>
+(function(){
+  function norm(s){
+    var fa='۰۱۲۳۴۵۶۷۸۹',ar='٠١٢٣٤٥٦٧٨٩';
+    return (s||'').replace(/[۰-۹]/g,function(d){return fa.indexOf(d)}).replace(/[٠-٩]/g,function(d){return ar.indexOf(d)})
+      .replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\s‌\-\.\/\\•·_+,:]/g,'').toLowerCase();
+  }
+  var S={found:[],hints:{}};
+  try{var raw=JSON.parse(localStorage.getItem('sadri-v3')||'null');if(raw&&raw.found)S=raw}catch(e){}
+  function save(){try{localStorage.setItem('sadri-v3',JSON.stringify(S))}catch(e){}}
+
+  function order(code,label,extra){return '<div class="order"><b>پاکت «'+code+'» را باز کنید.</b><span>'+label+'</span>'+(extra?'<span>'+extra+'</span>':'')+'</div>'}
+
+  var R={
+    acc8347:{keys:['8347'],tag:'ACC ••8347',title:'حساب ••۸۳۴۷ و گزارش حسابرسی',html:
+      '<div class="doc"><span class="stamp">محرمانه</span><b style="font-family:var(--font-ui)">گزارش حسابرسی داخلی، گروه صدری</b><span class="meta">۱۰ دسامبر ۲۰۲۵</span>'+
+      '<p><b>یافته ۱.</b> از مارس ۱۹۹۲ تا اکتبر ۲۰۲۵ هر ماه مبلغی ثابت به حساب ••۸۳۴۷ رفته است. صاحب این حساب در دفاتر نیامده. در دفاتر فعلی این پرداخت‌ها «هزینه مشاوره» ثبت شده‌اند، اما هیچ قرارداد مشاوره‌ای وجود ندارد.</p>'+
+      '<p><b>یافته ۲.</b> دستور این پرداخت ماهانه را در سال ۱۹۹۲ <b>کارمند شماره <span class="num">0412</span></b> ثبت کرده است، به دستور شخص مدیرعامل.</p>'+
+      '<p><b>یافته ۳.</b> دفاتر ۲۰۲۳ تا ۲۰۲۵ در ۲۰ اکتبر ۲۰۲۵ ویرایش شده‌اند، شش روز بعد از فوت مدیرعامل. نام ویرایش‌کننده ثبت نشده.</p>'+
+      '<p><b>یافته ۴.</b> یک روز بعد، انتقال <span class="num">TR-882</span> به مبلغ ۸۵٬۰۰۰ یورو به حساب شخصی ••۵۵۲۱ انجام شده، با عنوان «خرید تجهیزات IT». هیچ فاکتوری نیست. تأییدکننده: ش. صدری.</p></div>'+
+      '<div class="doc"><b style="font-family:var(--font-ui)">فهرست کارکنان سابق</b><div class="tbl"><table><thead><tr><th>شماره کارمند</th><th>نام</th><th>سال‌ها</th></tr></thead><tbody>'+
+      '<tr><td class="num">0388</td><td>داوود فرهمند</td><td class="num">1992–2018</td></tr>'+
+      '<tr><td class="num">0412</td><td>فرانک رادمنش</td><td class="num">1988–1993</td></tr>'+
+      '<tr><td class="num">0457</td><td>سیما کاظمی</td><td class="num">1993–2009</td></tr>'+
+      '<tr><td class="num">0420</td><td>رضا مقدم</td><td class="num">1998–2015</td></tr>'+
+      '<tr><td class="num">0731</td><td>نوید صالحی</td><td class="num">2012–2023</td></tr></tbody></table></div></div>'},
+    acc5521:{keys:['5521'],tag:'ACC ••5521',title:'حساب ••۵۵۲۱',html:'<div class="doc"><p>حساب شخصی، باز شده در ۲۰۱۴.</p><p>نام صاحب حساب به دلیل حریم خصوصی بانکی نمایش داده نمی‌شود. شاید جای دیگری این شماره را دیده باشید.</p></div>'},
+    tr882:{keys:['tr882','882'],tag:'TR-882',title:'انتقال TR-882',html:'<div class="doc"><p>۲۱ اکتبر ۲۰۲۵. مبلغ ۸۵٬۰۰۰ یورو. شرح: خرید تجهیزات IT. مقصد: حساب شخصی ••۵۵۲۱. تأییدکننده: ش. صدری.</p><p>پیوست: فاکتوری وجود ندارد.</p></div>'},
+    e0412:{keys:['0412','412','فرانکرادمنش','فرانک','رادمنش'],tag:'HR 0412',title:'پرونده پرسنلی ۰۴۱۲',html:
+      '<div class="doc"><p><b>فرانک رادمنش</b>، دستیار شخصی مدیرعامل، ۱۹۸۸ تا ۱۹۹۳. مجاز به انجام انتقال‌های بانکی به دستور مدیرعامل.</p><p>علت خروج: استعفای ناگهانی، ۱ آوریل ۱۹۹۳، بدون اطلاع قبلی.</p><p>وسایل جامانده ایشان از روی میز کارش جمع شد و در صندوق پرسنلی بایگانی شد.</p></div>'+order('۰۴۱۲','صندوق پرسنلی فرانک رادمنش')},
+    e0388:{keys:['0388','388','داوودفرهمند'],tag:'HR 0388',title:'پرونده پرسنلی ۰۳۸۸',html:'<div class="doc"><p>داوود فرهمند، مدیر مالی، ۱۹۹۲ تا ۲۰۱۸. بازنشسته. پرونده چیز غیرعادی ندارد.</p></div>'},
+    e0457:{keys:['0457','457','سیماکاظمی'],tag:'HR 0457',title:'پرونده پرسنلی ۰۴۵۷',html:'<div class="doc"><p>سیما کاظمی، منشی، ۱۹۹۳ تا ۲۰۰۹. جانشین دستیار قبلی. پرونده چیز غیرعادی ندارد.</p></div>'},
+    e0420:{keys:['0420','420','رضامقدم'],tag:'HR 0420',title:'پرونده پرسنلی ۰۴۲۰',html:'<div class="doc"><p>رضا مقدم، راننده، ۱۹۹۸ تا ۲۰۱۵. در یادداشت مدیر: «ماهی یک بار آقا را به یک آدرس در شرق شهر می‌برد. سؤالی نمی‌پرسد.»</p></div>'},
+    e0731:{keys:['0731','731','نویدصالحی'],tag:'HR 0731',title:'پرونده پرسنلی ۰۷۳۱',html:'<div class="doc"><p>نوید صالحی، کارشناس IT، ۲۰۱۲ تا ۲۰۲۳. سیستم دوربین منزل مدیرعامل را او نصب کرد.</p></div>'},
+    lawyer:{keys:['171993','w171993'],tag:'LAW 17/1993',title:'دفتر وکالت مستوفی، پرونده ۱۷/۱۹۹۳',html:
+      '<div class="doc"><span class="stamp">وصیت‌نامه دوم</span><p>بخشی از متن، به خط بهرام صدری، ۳ آوریل ۱۹۹۳:</p>'+
+      '<p>«نیمی از سهم من در گروه به پسرم شهاب، متولد ۱۲ ژوئیه ۱۹۹۱، و نیم دیگر به پسرم ش.، که مادرش اسمش را می‌داند و من تا امروز جرئت نکردم بنویسم.»</p>'+
+      '<span class="meta">یادداشت دفتر:</span><p>این پرونده در ۲۲ اکتبر ۲۰۲۵ به آقای <b>شهاب صدری</b> تحویل شد. ایشان قبلاً از تلفن منزل تماس گرفته بودند: <span class="num">02 648 31 09</span></p><p>نسخه دومی در دفتر باقی نمانده است.</p></div>'},
+    phone:{keys:['026483109','6483109','3226483109'],tag:'TEL 02 648 31 09',title:'پیغام‌گیر تلفن منزل',html:
+      '<div class="tape"><p class="h">MSG 1 · 22-10-2025 · 21:07</p><p class="v1">صدای مرد: شهاب، پول رسید. هشتاد و پنج تا. ولی اگه کسی بفهمه دفترا رو من عوض کردم، من تنها نمی‌افتم. کپی همه‌شون پیش خودمه.</p>'+
+      '<p class="h">MSG 2 · 24-10-2025 · 01:30</p><p class="v1">همان صدا: پیامت رو دیدم. تهدیدم نکن شهاب. شنبه تو مهمونی رو در رو حرف می‌زنیم. پوشه رو هم با خودم میارم که ببینی شوخی ندارم.</p>'+
+      '<p class="h">MSG 3 · 31-10-2025 · 23:51</p><p class="v3">صدای یک زن: الو؟ ببخشید این وقت شب... پسرم گفت امشب میاد اونجا. گفت کار مهمی داره. گوشیش رو جواب نمیده. اگه اونجاست بگید به مادرش زنگ بزنه... [قطع]</p></div>'},
+    house:{keys:['اقاقیا','اقاقیا18','خیاباناقاقیا','خیاباناقاقیا18','اقاقیاپلاک18','خیاباناقاقیاپلاک18'],tag:'PROP ACACIA 18',title:'پرونده ملک: خیابان اقاقیا، پلاک ۱۸',html:
+      '<div class="doc"><b style="font-family:var(--font-ui)">فهرست اشیای جامانده</b><span class="meta">شرکت نظافت «برق»، ۱ نوامبر ۲۰۲۵، صبح روز بعد از مهمانی. هر شیء شماره دارد.</span>'+
+      '<div class="tbl"><table><thead><tr><th>شماره</th><th>شیء</th><th>محل</th></tr></thead><tbody>'+
+      '<tr><td class="num">03</td><td>جاروی تزئینی جادوگر</td><td>ورودی</td></tr>'+
+      '<tr><td class="num">09</td><td>تندیس شیشه‌ای، لبه شکسته</td><td>اتاق مطالعه، کف</td></tr>'+
+      '<tr><td class="num">11</td><td>لیوان با ته سیگار</td><td>حیاط، کنار چراغ</td></tr>'+
+      '<tr><td class="num">14</td><td>پوشه مقوایی</td><td>زیر میز اتاق مطالعه</td></tr>'+
+      '<tr><td class="num">22</td><td>دستکش سفید با لکه قرمز</td><td>روشویی</td></tr>'+
+      '<tr><td class="num">27</td><td>جعبه چوبی قفل‌دار</td><td>انباری آشپزخانه، پشت کیسه برنج</td></tr>'+
+      '<tr><td class="num">31</td><td>جمجمه تزئینی با سنسور و کارت حافظه</td><td>اتاق مطالعه، قفسه</td></tr></tbody></table></div>'+
+      '<span class="meta">شماره هر شیء را جستجو کنید.</span></div>'+
+      '<div class="doc"><b style="font-family:var(--font-ui)">سیستم دوربین منزل</b><p>هشت دوربین. فیلم‌های ۳۱ اکتبر در <b>۱ نوامبر ساعت ۰۲:۱۰</b> از دستگاه پاک شده‌اند. کاربر: <span class="num">shahab.s</span></p><p>نسخه پشتیبان ابری هنوز هست، ولی فقط با رمز مالک قبلی، بهرام صدری، باز می‌شود. رمز چهار رقم است.</p></div>'+
+      '<form class="code" data-lock="cams"><input type="text" inputmode="numeric" autocomplete="off" placeholder="رمز مالک قبلی" aria-label="رمز دوربین‌ها" id="in-cams"><button type="submit">باز کن</button></form><p class="msg" aria-live="polite"></p>'},
+    i03:{keys:['03','3'],tag:'ITEM 03',title:'شیء ۰۳',html:'<div class="doc"><p>جاروی تزئینی جادوگر. چیزی به آن نچسبیده. فقط تزئینات است.</p></div>'},
+    i09:{keys:['09','9'],tag:'ITEM 09',title:'شیء ۰۹: تندیس شیشه‌ای',html:'<div class="doc"><p>تندیس شیشه‌ای سنگین، جایزه «بهترین سرمایه‌گذار سال ۱۹۹۹». لبه‌اش شکسته. روی شکستگی لکه قهوه‌ای خشک‌شده هست. شرکت نظافت فکر کرده شراب است.</p></div>'},
+    i11:{keys:['11'],tag:'ITEM 11',title:'شیء ۱۱: لیوان حیاط',html:'<div class="doc"><p>لیوان نیمه‌پر با سه ته سیگار، کنار چراغ حیاط. یکی از ته سیگارها مارک خاصی است که فقط شهاب می‌کشد.</p></div>'},
+    i14:{keys:['14'],tag:'ITEM 14',title:'شیء ۱۴: پوشه زیر میز',html:'<div class="doc"><p>پوشه مقوایی، کمی مچاله، زیر میز اتاق مطالعه. شرکت نظافت آن را دست‌نخورده تحویل داده.</p></div>'+order('۱۴','پوشه زیر میز اتاق مطالعه')},
+    i22:{keys:['22'],tag:'ITEM 22',title:'شیء ۲۲: دستکش',html:'<div class="doc"><p>یک دستکش سفید پارچه‌ای، خیس، با لکه‌های قرمز تند. در سینک روشویی طبقه پایین.</p></div>'},
+    i27:{keys:['27'],tag:'ITEM 27',title:'شیء ۲۷: جعبه چوبی',html:'<div class="doc"><p>جعبه چوبی کوچک با قفل چهاررقمی، پشت کیسه‌های برنج انباری. شرکت نظافت بازش نکرده.</p></div>'+order('۲۷','جعبه چوبی قفل‌دار','قفل را خودتان باید باز کنید.')},
+    i31:{keys:['31'],tag:'ITEM 31',title:'شیء ۳۱: جمجمه تزئینی',needs:'cams',html:
+      '<p class="muted">جمجمه با سنسور حرکت. وقتی کسی جلویش رد می‌شد، چند ثانیه صدا ضبط می‌کرد. کارت حافظه با همان سیستم خانه باز شد.</p>'+
+      '<div class="tape"><p class="h">REC 23:11:52</p><p class="n">[موسیقی مهمانی، نویز]</p>'+
+      '<p class="v1">صدای ۱: ...پولی که به من دادی کافی نیست. اگر بخواهی اسم من را وسط بکشی...</p>'+
+      '<p class="v2">صدای ۲: پول؟ پولی که پدرم هر ماه می‌فرستاد را می‌گویی؟</p>'+
+      '<p class="v1">صدای ۱: پدرت؟ داری مسخره‌ام می‌کنی؟ همه چیز را پاک کردم، همان‌طور که گفتی.</p>'+
+      '<p class="n">[نویز، چهار ثانیه نامفهوم]</p>'+
+      '<p class="v2">صدای ۲: ...تو هم با آن‌ها هستی. من فقط آمده‌ام حقم را بگیرم.</p>'+
+      '<p class="v1">صدای ۱: حق تو؟ تو که همه چیز را داری!</p>'+
+      '<p class="n">[صدای ضربه. چیزی شیشه‌ای می‌شکند. سکوت. موسیقی]</p>'+
+      '<p class="h">REC 23:25:31</p><p class="n">صدای ۳، آهسته: ...نه. نه، نه، نه. این که...</p></div>'},
+    cams:{keys:[],tag:'CCTV 31-10',title:'نسخه پشتیبان دوربین‌ها، شب ۳۱ اکتبر',html:'<p class="muted">هشت فایل. فقط سایه‌ها و ساعت‌ها. ساعت‌ها را کنار هم بگذارید.</p><div class="clips" id="clips"></div>'},
+    mother:{keys:['0471629014','471629014','32471629014'],tag:'TEL 0471 62 90 14',title:'آگهی‌های مفقودی',html:
+      '<p class="muted">این شماره در ده‌ها آگهی کاغذی و آنلاین تکرار شده است.</p>'+
+      '<div class="doc"><span class="stamp">گمشده</span><p style="font-size:24px;font-family:var(--font-ui);font-weight:800">شهرام مرادی</p>'+
+      '<p>متولد ۴ مارس ۱۹۹۲. قد حدود ۱۸۰، موی تیره. آخرین بار شب ۳۱ اکتبر ۲۰۲۵ دیده شده، با لباس هالووین: شنل سیاه و ماسک سفید.</p>'+
+      '<p>به مادرش گفته بود به مهمانی‌ای در خیابان اقاقیا می‌رود تا «حقش را بگیرد».</p>'+
+      '<p>هر خبری دارید به مادرش، <b>لیلا مرادی</b>، زنگ بزنید: <span class="num">0471 62 90 14</span></p>'+
+      '<span class="meta">در عکس آگهی، شهرام به طرز عجیبی شبیه شهاب صدری است.</span></div>'+
+      '<p class="muted">پرونده آخر باز شد. پایین صفحه.</p>'}
+  };
+  var ORDER_FINAL=['mother'];
+
+  var HINTS=[
+    ['شماره حسابی که هر ماه پول می‌گرفت، در گردش حساب ناقص است.','پشت عکس سوخته را نگاه کنید. دو رقم آنجاست.','دو رقم پشت عکس، بعد دو رقم آخر حساب. جستجو کنید: ۸۳۴۷'],
+    ['گزارش حسابرسی می‌گوید چه کسی دستور پرداخت ماهانه را ثبت کرد.','شماره کارمند هم یک شناسه است.','جستجو کنید: ۰۴۱۲'],
+    ['پاکت ۰۴۱۲ را باز کرده‌اید؟ همه برگه‌ها را تا آخر بخوانید.','آخرین صفحه دفتر خاطرات از یک وکیل حرف می‌زند.','شماره پرونده وکیل را جستجو کنید: ۱۷/۱۹۹۳'],
+    ['پرونده وکیل می‌گوید شهاب از کجا تماس گرفت.','شماره تلفن هم شناسه است.','جستجو کنید: ۰۲ ۶۴۸ ۳۱ ۰۹'],
+    ['پیام دوم از پوشه‌ای حرف می‌زند که به مهمانی رفت. مهمانی کجا بود؟','آدرس خانه در روزنامه آمده.','جستجو کنید: اقاقیا ۱۸'],
+    ['پوشه را پیدا کردید؟ شماره‌اش در فهرست اشیا هست. دوربین‌ها رمز مالک قبلی را می‌خواهند. فرانک درباره رمزهای آقا چیزی نوشته بود.','رمزها تاریخ تولد پسر پنهانی بود، روز و ماه. دفتر می‌گوید پسر کی یک‌ماهه شد؟','۴ آوریل یک‌ماهه شد، پس ۴ مارس به دنیا آمده. رمز: ۰۴۰۳'],
+    ['فیلم آشپزخانه را ببینید. آن جعبه حالا کجاست؟ فهرست اشیا را دوباره بخوانید.','روی جعبه «ش ♥» خراشیده‌اند. وصیت‌نامه تاریخ تولد یک «ش» را دارد.','رمز جعبه: ۱۲۰۷. کلید داخل جعبه پاکت «پایین» را باز می‌کند. روی گوشی شکسته یک شماره هست. جستجویش کنید.'],
+    []
+  ];
+  function stage(){var f=S.found;var has=function(k){return f.indexOf(k)>-1};
+    if(!has('acc8347'))return 0;if(!has('e0412'))return 1;if(!has('lawyer'))return 2;if(!has('phone'))return 3;if(!has('house'))return 4;if(!has('cams'))return 5;if(!has('mother'))return 6;return 7}
+  function renderHints(){
+    var st=stage(),box=document.getElementById('hints');box.innerHTML='';
+    document.getElementById('hintbox').hidden=st>=7;
+    var list=HINTS[st],n=S.hints[st]||0;
+    for(var i=0;i<n&&i<list.length;i++){var p=document.createElement('p');p.className='hint';p.textContent='راهنمایی '+(i+1)+': '+list[i];box.appendChild(p)}
+    if(n<list.length){var b=document.createElement('button');b.type='button';b.className='ghost';b.textContent=n?'راهنمایی بیشتر':'یک راهنمایی بدهید';
+      b.addEventListener('click',function(){S.hints[st]=n+1;save();renderHints()});box.appendChild(b)}
+  }
+
+  function cooldown(els,msg,sec){
+    els.forEach(function(e){e.disabled=true});var t=sec;msg.className='msg bad';
+    msg.textContent='نه. '+t+' ثانیه صبر کنید.';
+    var iv=setInterval(function(){t--;if(t<=0){clearInterval(iv);els.forEach(function(e){e.disabled=false});msg.textContent=''}else msg.textContent='نه. '+t+' ثانیه صبر کنید.'},1000);
+  }
+
+  function findRecord(q){
+    var n=norm(q);if(!n)return null;
+    for(var id in R){if(R[id].keys.indexOf(n)>-1)return id}
+    if(n.indexOf('اقاقیا')>-1)return 'house';
+    return null;
+  }
+  var lastNew=null;
+  document.getElementById('search').addEventListener('submit',function(e){
+    e.preventDefault();var inp=document.getElementById('q'),msg=document.getElementById('smsg');
+    var id=findRecord(inp.value);
+    if(!id){msg.className='msg bad';msg.textContent='رکوردی پیدا نشد.';return}
+    if(R[id].needs&&S.found.indexOf(R[id].needs)<0){msg.className='msg bad';msg.textContent='این پرونده قفل است. کارت حافظه فقط با رمز سیستم خانه باز می‌شود.';return}
+    msg.className='msg good';
+    if(S.found.indexOf(id)>-1){msg.textContent='این پرونده قبلاً باز شده. پایین‌تر است.'}
+    else{S.found.push(id);save();msg.textContent='پرونده باز شد.'}
+    lastNew=id;inp.value='';render();
+    var el=document.getElementById('r-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  function render(){
+    var box=document.getElementById('records');box.innerHTML='';
+    S.found.slice().reverse().forEach(function(id){
+      var r=R[id];var d=document.createElement('section');d.className='rec'+(id===lastNew?' new':'');d.id='r-'+id;
+      d.innerHTML='<div class="rec-head"><h2>'+r.title+'</h2><span class="tag">'+r.tag+'</span></div>'+r.html;
+      box.appendChild(d);
+    });
+    var lock=document.querySelector('form[data-lock="cams"]');
+    if(lock){
+      if(S.found.indexOf('cams')>-1){lock.hidden=true;lock.nextElementSibling.className='msg good';lock.nextElementSibling.textContent='نسخه پشتیبان باز شد.'}
+      else lock.addEventListener('submit',function(e){e.preventDefault();var inp=lock.querySelector('input');var v=norm(inp.value);
+        if(v==='0403'||v==='04031992'||v==='4031992'){S.found.push('cams');save();lastNew='cams';render();var el=document.getElementById('r-cams');if(el)el.scrollIntoView({behavior:'smooth'})}
+        else cooldown([inp,lock.querySelector('button')],lock.nextElementSibling,15)});
+    }
+    if(S.found.indexOf('cams')>-1)buildClips();
+    var fin=S.found.indexOf('mother')>-1;document.getElementById('final').hidden=!fin;if(fin)renderFinal();
+    renderHints();
+  }
+
+  // ---------- final ----------
+  var FINAL=[
+    ['زن توی عکس نیم‌سوخته کیست؟',['فرانک رادمنش','لیلا، مادر شهرام','همسر بهرام صدری'],1],
+    ['پرداخت ماهانه به حساب ••۸۳۴۷ برای چه بود؟',['برای لیلا و پسر پنهانی بهرام، شهرام','بدهی قدیمی به یک شریک','حقوق مخفی فرانک'],0],
+    ['۸۵ هزار یورو چرا به مهرداد رسید؟',['بابت خرید تجهیزات','تا ردّ پرداخت‌ها را از دفاتر پاک کند و کسی از برادر شهاب باخبر نشود','چون از شهاب طلب داشت'],1],
+    ['چه کسی در اتاق مطالعه ضربه را زد؟',['شهاب','امین','مهرداد'],2],
+    ['چرا مهرداد آدم اشتباهی را زد؟',['در تاریکی، برادرِ شبیه شهاب با لباسی مثل لباس شهاب آنجا بود','از اول می‌خواست شهرام را بزند','مست بود و کسی را نمی‌شناخت'],0],
+    ['شهاب بعد از آن چه کرد؟',['به پلیس زنگ زد','برادرش را شناخت، با مهرداد جسد را از راه مخفی پایین برد و بعد فیلم‌ها را پاک کرد','از خانه رفت'],1],
+    ['امین و مارال چه دیده یا شنیده بودند؟',['هیچ‌چیز','امین مشاجره را شنید؛ مارال پایین دو نفر را دید که چیزی می‌کشیدند','هر دو ضربه را دیدند'],1],
+    ['دست‌های قرمز مهسا و دستکش روشویی چه بود؟',['رنگ خون مصنوعی تزئینات','خون شهرام','رنگ مو'],0],
+    ['چه کسی امشب شما را دعوت کرد و چرا؟',['شهاب، برای آشتی','لیلا، تا بفهمد پسرش کجاست','مهرداد، تا خودش را تبرئه کند'],1]
+  ];
+  function renderFinal(){
+    var wrap=document.getElementById('final-qs');wrap.innerHTML='';var done=S.fin||0;
+    for(var i=0;i<FINAL.length&&i<=done;i++)(function(i){
+      var q=FINAL[i],d=document.createElement('div');d.className='q';
+      var t=document.createElement('h3');t.textContent=(i+1)+'. '+q[0];d.appendChild(t);
+      var o=document.createElement('div');o.className='opts';var msg=document.createElement('p');msg.className='msg';var btns=[];
+      q[1].forEach(function(txt,j){var b=document.createElement('button');b.type='button';b.textContent=txt;btns.push(b);o.appendChild(b);
+        if(i<done){b.disabled=true;if(j===q[2]){b.style.borderColor='var(--ok)';b.style.opacity=1}}
+        else b.addEventListener('click',function(){if(j===q[2]){S.fin=i+1;save();renderFinal()}else cooldown(btns,msg,12)})});
+      d.appendChild(o);d.appendChild(msg);wrap.appendChild(d)})(i);
+    document.getElementById('final-letter').hidden=done<FINAL.length;
+  }
+
+  document.getElementById('reset').addEventListener('click',function(){var b=this;
+    if(b.dataset.armed){S={found:[],hints:{}};save();lastNew=null;render();b.textContent='شروع دوباره';delete b.dataset.armed;window.scrollTo(0,0);return}
+    b.dataset.armed='1';b.textContent='مطمئنید؟ دوباره بزنید';setTimeout(function(){delete b.dataset.armed;b.textContent='شروع دوباره'},5000)});
+
+  // ---------- CCTV ----------
+  var CLIPS=[
+    {n:1,cam:'CAM 02  HALL',start:[22,40,12],dur:8,bg:'hall',actors:[{c:'plain',crouch:true,paint:true,k:[[0,220,1],[8,232,1]]}]},
+    {n:2,cam:'CAM 02  HALL',start:[23,4,6],dur:9,bg:'hall',actors:[{c:'cloak',k:[[0,-40,1],[5.5,402,1],[6.6,402,0]]}]},
+    {n:3,cam:'CAM 05  GARDEN',start:[23,4,34],dur:8,bg:'garden',actors:[{c:'cloak',k:[[0,250,1],[8,262,1]],smoke:true}]},
+    {n:4,cam:'CAM 02  HALL',start:[23,10,1],dur:12,bg:'hall',cut:[6,[23,16,24]],actors:[
+      {c:'plain',k:[[0,-40,1],[4.8,402,1],[5.6,402,0],[12,402,0]],carry:[0,5.6]},
+      {c:'plain',k:[[0,402,0],[6.4,402,0],[7,402,1],[9,-60,1],[12,-60,1]]}]},
+    {n:5,cam:'CAM 02  HALL',start:[23,14,40],dur:8,bg:'hall',actors:[{c:'plain',k:[[0,566,0],[0.8,566,1],[1.6,560,1],[2.4,566,1],[6.5,700,1],[8,700,1]]}]},
+    {n:6,cam:'CAM 02  HALL',start:[23,25,10],dur:8,bg:'hall',actors:[{c:'cloak',k:[[0,690,1],[5,402,1],[6,402,0]]}]},
+    {n:7,cam:'CAM 07  KITCHEN',start:[23,50,31],dur:12,bg:'kitchen',actors:[{c:'plain',crouchUntil:3.4,k:[[0,520,0],[1.6,520,0],[2.2,510,1],[3.4,500,1],[4.2,490,1],[4.8,505,1],[5.6,488,1],[8.4,150,1],[9.4,150,1],[11.4,-50,1]],carry:[2,9]}]},
+    {n:8,cam:'CAM 03  WASHROOM',start:[23,55,2],dur:8,bg:'wash',actors:[{c:'plain',wash:true,k:[[0,330,1],[8,330,1]]}]}
+  ];
+  var built=false;
+  function buildClips(){
+    var box=document.getElementById('clips');if(!box)return;box.innerHTML='';
+    CLIPS.forEach(function(cl){
+      var d=document.createElement('div');d.className='clip';
+      var cv=document.createElement('canvas');cv.width=640;cv.height=360;cv.setAttribute('aria-label','فیلم دوربین '+cl.n);
+      var bar=document.createElement('div');bar.className='clip-bar';var lab=document.createElement('span');lab.textContent='فیلم '+cl.n;
+      var btn=document.createElement('button');btn.type='button';btn.className='ghost';btn.textContent='پخش';
+      bar.appendChild(lab);bar.appendChild(btn);d.appendChild(cv);d.appendChild(bar);box.appendChild(d);
+      var st={t:0,playing:false,last:0};draw(cv,cl,0);
+      btn.addEventListener('click',function(){
+        if(st.playing){st.playing=false;btn.textContent='پخش';return}
+        if(st.t>=cl.dur)st.t=0;st.playing=true;btn.textContent='توقف';st.last=performance.now();
+        requestAnimationFrame(function loop(now){if(!st.playing||!cv.isConnected)return;st.t+=(now-st.last)/1000;st.last=now;
+          if(st.t>=cl.dur){st.t=cl.dur;st.playing=false;btn.textContent='پخش دوباره';draw(cv,cl,st.t);return}
+          draw(cv,cl,st.t);requestAnimationFrame(loop)});
+      });
+    });
+  }
+  function lerpK(k,t){if(t<=k[0][0])return k[0];
+    for(var i=1;i<k.length;i++){if(t<=k[i][0]){var a=k[i-1],b=k[i],u=(t-a[0])/(b[0]-a[0]);return [t,a[1]+(b[1]-a[1])*u,a[2]+(b[2]-a[2])*u]}}
+    return k[k.length-1]}
+  function pad(n){return (n<10?'0':'')+n}
+  function stamp(cl,t){var s=cl.start,off=t;if(cl.cut&&t>=cl.cut[0]){s=cl.cut[1];off=t-cl.cut[0]}
+    var sec=s[0]*3600+s[1]*60+s[2]+Math.floor(off);return '31-10-2025  '+pad(Math.floor(sec/3600)%24)+':'+pad(Math.floor(sec/60)%60)+':'+pad(sec%60)}
+  function figure(g,x,y,a,o,t){
+    g.save();g.globalAlpha=a;g.fillStyle='#050505';
+    var hgt=o.crouch?70:120,top=y-hgt;
+    g.beginPath();g.arc(x,top+12,12,0,Math.PI*2);g.fill();
+    if(o.cloak){g.beginPath();g.moveTo(x-10,top+20);g.lineTo(x+10,top+20);g.lineTo(x+26,y);g.lineTo(x-26,y);g.closePath();g.fill();
+      g.beginPath();g.moveTo(x-14,top+16);g.quadraticCurveTo(x,top-14,x+14,top+16);g.fill()}
+    else{g.fillRect(x-14,top+24,28,hgt*0.5);g.fillRect(x-12,top+24+hgt*0.5,10,hgt*0.5-24);g.fillRect(x+2,top+24+hgt*0.5,10,hgt*0.5-24)}
+    if(o.carry){g.fillStyle='#1b1b1b';g.fillRect(x+12,top+hgt*0.45,22,16)}
+    if(o.smoke){var f=.5+.5*Math.sin(t*3);g.fillStyle='rgba(255,140,60,'+(.4+.6*f)+')';g.beginPath();g.arc(x+16,top+18,2.5,0,Math.PI*2);g.fill()}
+    if(o.paint||o.wash){var sw=Math.sin(t*(o.wash?9:4))*10;g.fillRect(x-30+sw,top+(o.wash?60:30),18,8)}
+    g.restore()}
+  function draw(cv,cl,t){
+    var g=cv.getContext('2d'),W=640,H=360,cutting=cl.cut&&Math.abs(t-cl.cut[0])<.25;
+    g.fillStyle='#3a3d3b';g.fillRect(0,0,W,H);g.font='12px JetBrains Mono, monospace';
+    if(cl.bg==='hall'){
+      g.fillStyle='#4a4d4a';g.fillRect(0,0,W,250);g.fillStyle='#2c2e2c';g.fillRect(0,250,W,110);
+      g.fillStyle='#262826';g.fillRect(372,110,60,140);g.fillRect(536,110,60,140);
+      g.fillStyle='#8a8a84';g.fillText('STUDY',384,100);g.fillText('OFFICE',546,100);
+      g.fillStyle='#303230';g.fillRect(120,120,50,130);g.fillStyle='#5a5c58';g.fillRect(0,246,W,4);
+      if(cl.n===1){var k=Math.min(1,t/7);g.fillStyle='#1d1f1d';for(var i=0;i<5;i++)g.fillRect(180+i*14,170+((i*37)%30),6,60*k)}
+    }else if(cl.bg==='garden'){
+      g.fillStyle='#1e2120';g.fillRect(0,0,W,H);g.fillStyle='#262a28';g.fillRect(0,250,W,110);
+      g.fillStyle='#141615';for(var j=0;j<5;j++){g.beginPath();g.arc(60+j*140,170,60,0,Math.PI*2);g.fill()}
+      var grd=g.createRadialGradient(480,90,4,480,90,140);grd.addColorStop(0,'rgba(200,200,170,.35)');grd.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=grd;g.fillRect(0,0,W,H);
+      g.fillStyle='#555';g.fillRect(478,90,4,160);
+    }else if(cl.bg==='kitchen'){
+      g.fillStyle='#4b4e4b';g.fillRect(0,0,W,H);g.fillStyle='#343634';g.fillRect(0,260,W,100);
+      g.fillStyle='#3d403d';g.fillRect(240,170,400,90);g.fillStyle='#2f312f';for(var m=0;m<4;m++)g.fillRect(250+m*96,180,88,74);
+      var open=Math.max(0,Math.min(1,(t-1)/1));g.fillStyle='#0c0c0c';g.fillRect(538,180,88,74);g.fillStyle='#2f312f';g.fillRect(538+88*open*.8,180,88*(1-open*.8),74);
+      g.fillStyle='#262826';g.fillRect(90,100,80,160);g.fillStyle='#8a8a84';g.fillText('PANTRY',98,94);g.fillStyle='#2f312f';g.fillRect(240,60,400,70);
+    }else{
+      g.fillStyle='#55585a';g.fillRect(0,0,W,H);g.fillStyle='#3a3c3c';g.fillRect(0,270,W,90);
+      g.fillStyle='#6b6e6e';g.fillRect(250,200,160,30);g.fillStyle='#2c2e2e';g.fillRect(270,60,120,120);
+    }
+    if(!cutting)cl.actors.forEach(function(ac){var p=lerpK(ac.k,t);if(p[2]<=.01)return;
+      var crouch=ac.crouch||(ac.crouchUntil&&t<ac.crouchUntil);
+      var y=cl.bg==='kitchen'?(crouch&&ac.crouchUntil?256:300):(cl.bg==='wash'?320:300);
+      figure(g,p[1],y,p[2],{cloak:ac.c==='cloak',crouch:crouch,carry:ac.carry&&t>=ac.carry[0]&&t<ac.carry[1],smoke:ac.smoke,paint:ac.paint,wash:ac.wash},t)});
+    var img=g.getImageData(0,0,W,H),d=img.data;
+    for(var q=0;q<d.length;q+=4){var nz=(Math.random()-.5)*(cutting?120:34);var v=(d[q]*.3+d[q+1]*.59+d[q+2]*.11)+nz;d[q]=d[q+1]=d[q+2]=v}
+    g.putImageData(img,0,0);g.fillStyle='rgba(0,0,0,.18)';for(var y2=0;y2<H;y2+=3)g.fillRect(0,y2,W,1);
+    g.fillStyle='#e8e8e0';g.font='600 16px JetBrains Mono, monospace';g.fillText(cl.cam,16,28);g.fillText(stamp(cl,t),W-246,H-18);
+    if(Math.floor(t*2)%2===0){g.fillStyle='#d23';g.beginPath();g.arc(W-24,22,6,0,Math.PI*2);g.fill()}
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>
