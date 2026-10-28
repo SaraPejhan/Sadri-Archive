@@ -44,7 +44,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .doc .meta{font-family:var(--font-ui);font-size:12px;opacity:.7}
 .stamp{align-self:flex-start;border:2px solid var(--seal);color:var(--seal);font-family:var(--font-ui);font-weight:800;font-size:12px;padding:2px 10px;transform:rotate(-4deg)}
 .tbl{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:14px;font-family:var(--font-ui)}
+table{color:inherit;font-size:inherit;border-collapse:collapse;width:100%;font-size:14px;font-family:var(--font-ui)}
 th,td{border-bottom:1px solid rgba(43,38,32,.25);padding:6px;text-align:right;vertical-align:top}
 th{font-weight:600;font-size:12px;opacity:.75}
 .num{font-family:var(--font-mono);direction:ltr;unicode-bidi:isolate}
@@ -66,9 +66,10 @@ th{font-weight:600;font-size:12px;opacity:.75}
 .opts button:hover:not(:disabled){border-color:var(--ink)}
 .letter{font-family:var(--font-doc);font-size:18px;line-height:2.1;display:flex;flex-direction:column;gap:14px}
 footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px}
+[hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-<style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
+<style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 </head>
 <body>
 
@@ -76,7 +77,7 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
   <header class="mast">
     <span class="eyebrow">SADRI GROUP · RECORDS ARCHIVE</span>
     <h1>بایگانی اسناد گروه صدری</h1>
-    <p class="muted">هر پرونده یک شناسه دارد: شماره حساب، شماره کارمند، شماره پرونده، شماره تلفن یا آدرس. شناسه‌ها در مدارک شما هستند.</p>
+    <p class="muted">برای دیدن پرونده، شناسه آن را جستجو کنید.</p>
   </header>
 
   <div class="search">
@@ -91,24 +92,9 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
 
   <div class="records" id="records"></div>
 
-  <section class="rec" id="final" hidden>
-    <div class="rec-head"><h2>پرونده آخر: بازسازی حقیقت</h2></div>
-    <p>همه با هم حرف بزنید، بعد جواب بدهید. جواب اشتباه چند ثانیه قفل می‌کند.</p>
-    <div id="final-qs" class="clips"></div>
-    <div id="final-letter" hidden>
-      <div class="letter">
-        <p>همه‌اش را فهمیدید. حالا من هم می‌دانم.</p>
-        <p>اسم من لیلاست. آن عکس نیم‌سوخته را سی و چهار سال پیش گرفتیم. بچه‌ای که بغلم بود شهرام بود.</p>
-        <p>آن پیغام ساعت ۲۳:۵۱ را من گذاشتم. یک سال است هر شب گوشی‌ام را نگاه می‌کنم که شاید جواب بدهد.</p>
-        <p>دعوت‌نامه را من فرستادم، به اسم شهاب. می‌دانستم اگر اسم خودم را بنویسم، هیچ‌کدامتان نمی‌آیید.</p>
-        <p>مهرداد، تو نمی‌دانستی چه کسی را می‌زنی. این را می‌فهمم. شهاب، تو می‌دانستی چه کسی را زیر زمین می‌بری. این را نمی‌فهمم.</p>
-        <p>بقیه‌تان فقط آنجا بودید. گاهی همین کافی است که آدم یک سال ساکت بماند.</p>
-        <p>ل.</p>
-      </div>
-    </div>
-  </section>
+  <section class="rec" id="final" hidden><div id="final-qs"></div><div id="final-letter" hidden></div></section>
 
-  <footer><span class="num">ARCHIVE v3.1</span><button type="button" class="ghost" id="reset">شروع دوباره</button></footer>
+  <footer><span class="num">ARCHIVE v4.0</span><button type="button" class="ghost" id="reset">شروع دوباره</button></footer>
 </div>
 
 <script>
@@ -119,97 +105,36 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       .replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\s‌\-\.\/\\•·_+,:]/g,'').toLowerCase();
   }
   var S={found:[],hints:{}};
-  try{var raw=JSON.parse(localStorage.getItem('sadri-v3')||'null');if(raw&&raw.found)S=raw}catch(e){}
-  function save(){try{localStorage.setItem('sadri-v3',JSON.stringify(S))}catch(e){}}
+  try{var raw=JSON.parse(localStorage.getItem('sadri-v4')||'null');if(raw&&raw.found)S=raw}catch(e){}
+  function save(){try{localStorage.setItem('sadri-v4',JSON.stringify(S))}catch(e){}}
 
   function order(code,label,extra){return '<div class="order"><b>پاکت «'+code+'» را باز کنید.</b><span>'+label+'</span>'+(extra?'<span>'+extra+'</span>':'')+'</div>'}
 
   var R={
-    acc8347:{keys:['8347'],tag:'ACC ••8347',title:'حساب ••۸۳۴۷ و گزارش حسابرسی',html:
+    acc8347:{keys:['8347'],tag:'ACC ••8347',title:'حساب <span class="num">••8347</span> و گزارش حسابرسی',html:
       '<div class="doc"><span class="stamp">محرمانه</span><b style="font-family:var(--font-ui)">گزارش حسابرسی داخلی، گروه صدری</b><span class="meta">۱۰ دسامبر ۲۰۲۵</span>'+
-      '<p><b>یافته ۱.</b> از مارس ۱۹۹۲ تا اکتبر ۲۰۲۵ هر ماه مبلغی ثابت به حساب ••۸۳۴۷ رفته است. صاحب این حساب در دفاتر نیامده. در دفاتر فعلی این پرداخت‌ها «هزینه مشاوره» ثبت شده‌اند، اما هیچ قرارداد مشاوره‌ای وجود ندارد.</p>'+
+      '<p><b>یافته ۱.</b> از مارس ۱۹۹۲ تا اکتبر ۲۰۲۵ هر ماه مبلغی ثابت به حساب <span class="num">••8347</span> رفته است. صاحب این حساب در دفاتر نیامده. در دفاتر فعلی این پرداخت‌ها «هزینه مشاوره» ثبت شده‌اند، اما هیچ قرارداد مشاوره‌ای وجود ندارد.</p>'+
       '<p><b>یافته ۲.</b> دستور این پرداخت ماهانه را در سال ۱۹۹۲ <b>کارمند شماره <span class="num">0412</span></b> ثبت کرده است، به دستور شخص مدیرعامل.</p>'+
       '<p><b>یافته ۳.</b> دفاتر ۲۰۲۳ تا ۲۰۲۵ در ۲۰ اکتبر ۲۰۲۵ ویرایش شده‌اند، شش روز بعد از فوت مدیرعامل. نام ویرایش‌کننده ثبت نشده.</p>'+
-      '<p><b>یافته ۴.</b> یک روز بعد، انتقال <span class="num">TR-882</span> به مبلغ ۸۵٬۰۰۰ یورو به حساب شخصی ••۵۵۲۱ انجام شده، با عنوان «خرید تجهیزات IT». هیچ فاکتوری نیست. تأییدکننده: ش. صدری.</p></div>'+
+      '<p><b>یافته ۴.</b> یک روز بعد، انتقال <span class="num">TR-882</span> به مبلغ ۸۵٬۰۰۰ یورو به حساب شخصی <span class="num">••5521</span> انجام شده، با عنوان «خرید تجهیزات IT». هیچ فاکتوری نیست. تأییدکننده: ش. صدری.</p></div>'+
       '<div class="doc"><b style="font-family:var(--font-ui)">فهرست کارکنان سابق</b><div class="tbl"><table><thead><tr><th>شماره کارمند</th><th>نام</th><th>سال‌ها</th></tr></thead><tbody>'+
       '<tr><td class="num">0388</td><td>داوود فرهمند</td><td class="num">1992–2018</td></tr>'+
       '<tr><td class="num">0412</td><td>فرانک رادمنش</td><td class="num">1988–1993</td></tr>'+
       '<tr><td class="num">0457</td><td>سیما کاظمی</td><td class="num">1993–2009</td></tr>'+
       '<tr><td class="num">0420</td><td>رضا مقدم</td><td class="num">1998–2015</td></tr>'+
-      '<tr><td class="num">0731</td><td>نوید صالحی</td><td class="num">2012–2023</td></tr></tbody></table></div></div>'},
-    acc5521:{keys:['5521'],tag:'ACC ••5521',title:'حساب ••۵۵۲۱',html:'<div class="doc"><p>حساب شخصی، باز شده در ۲۰۱۴.</p><p>نام صاحب حساب به دلیل حریم خصوصی بانکی نمایش داده نمی‌شود. شاید جای دیگری این شماره را دیده باشید.</p></div>'},
-    tr882:{keys:['tr882','882'],tag:'TR-882',title:'انتقال TR-882',html:'<div class="doc"><p>۲۱ اکتبر ۲۰۲۵. مبلغ ۸۵٬۰۰۰ یورو. شرح: خرید تجهیزات IT. مقصد: حساب شخصی ••۵۵۲۱. تأییدکننده: ش. صدری.</p><p>پیوست: فاکتوری وجود ندارد.</p></div>'},
-    e0412:{keys:['0412','412','فرانکرادمنش','فرانک','رادمنش'],tag:'HR 0412',title:'پرونده پرسنلی ۰۴۱۲',html:
-      '<div class="doc"><p><b>فرانک رادمنش</b>، دستیار شخصی مدیرعامل، ۱۹۸۸ تا ۱۹۹۳. مجاز به انجام انتقال‌های بانکی به دستور مدیرعامل.</p><p>علت خروج: استعفای ناگهانی، ۱ آوریل ۱۹۹۳، بدون اطلاع قبلی.</p><p>وسایل جامانده ایشان از روی میز کارش جمع شد و در صندوق پرسنلی بایگانی شد.</p></div>'+order('۰۴۱۲','صندوق پرسنلی فرانک رادمنش')},
-    e0388:{keys:['0388','388','داوودفرهمند'],tag:'HR 0388',title:'پرونده پرسنلی ۰۳۸۸',html:'<div class="doc"><p>داوود فرهمند، مدیر مالی، ۱۹۹۲ تا ۲۰۱۸. بازنشسته. پرونده چیز غیرعادی ندارد.</p></div>'},
-    e0457:{keys:['0457','457','سیماکاظمی'],tag:'HR 0457',title:'پرونده پرسنلی ۰۴۵۷',html:'<div class="doc"><p>سیما کاظمی، منشی، ۱۹۹۳ تا ۲۰۰۹. جانشین دستیار قبلی. پرونده چیز غیرعادی ندارد.</p></div>'},
-    e0420:{keys:['0420','420','رضامقدم'],tag:'HR 0420',title:'پرونده پرسنلی ۰۴۲۰',html:'<div class="doc"><p>رضا مقدم، راننده، ۱۹۹۸ تا ۲۰۱۵. در یادداشت مدیر: «ماهی یک بار آقا را به یک آدرس در شرق شهر می‌برد. سؤالی نمی‌پرسد.»</p></div>'},
-    e0731:{keys:['0731','731','نویدصالحی'],tag:'HR 0731',title:'پرونده پرسنلی ۰۷۳۱',html:'<div class="doc"><p>نوید صالحی، کارشناس IT، ۲۰۱۲ تا ۲۰۲۳. سیستم دوربین منزل مدیرعامل را او نصب کرد.</p></div>'},
-    lawyer:{keys:['171993','w171993'],tag:'LAW 17/1993',title:'دفتر وکالت مستوفی، پرونده ۱۷/۱۹۹۳',html:
-      '<div class="doc"><span class="stamp">وصیت‌نامه دوم</span><p>بخشی از متن، به خط بهرام صدری، ۳ آوریل ۱۹۹۳:</p>'+
-      '<p>«نیمی از سهم من در گروه به پسرم شهاب، متولد ۱۲ ژوئیه ۱۹۹۱، و نیم دیگر به پسرم ش.، که مادرش اسمش را می‌داند و من تا امروز جرئت نکردم بنویسم.»</p>'+
-      '<span class="meta">یادداشت دفتر:</span><p>این پرونده در ۲۲ اکتبر ۲۰۲۵ به آقای <b>شهاب صدری</b> تحویل شد. ایشان قبلاً از تلفن منزل تماس گرفته بودند: <span class="num">02 648 31 09</span></p><p>نسخه دومی در دفتر باقی نمانده است.</p></div>'},
-    phone:{keys:['026483109','6483109','3226483109'],tag:'TEL 02 648 31 09',title:'پیغام‌گیر تلفن منزل',html:
-      '<div class="tape"><p class="h">MSG 1 · 22-10-2025 · 21:07</p><p class="v1">صدای مرد: شهاب، پول رسید. هشتاد و پنج تا. ولی اگه کسی بفهمه دفترا رو من عوض کردم، من تنها نمی‌افتم. کپی همه‌شون پیش خودمه.</p>'+
-      '<p class="h">MSG 2 · 24-10-2025 · 01:30</p><p class="v1">همان صدا: پیامت رو دیدم. تهدیدم نکن شهاب. شنبه تو مهمونی رو در رو حرف می‌زنیم. پوشه رو هم با خودم میارم که ببینی شوخی ندارم.</p>'+
-      '<p class="h">MSG 3 · 31-10-2025 · 23:51</p><p class="v3">صدای یک زن: الو؟ ببخشید این وقت شب... پسرم گفت امشب میاد اونجا. گفت کار مهمی داره. گوشیش رو جواب نمیده. اگه اونجاست بگید به مادرش زنگ بزنه... [قطع]</p></div>'},
-    house:{keys:['اقاقیا','اقاقیا18','خیاباناقاقیا','خیاباناقاقیا18','اقاقیاپلاک18','خیاباناقاقیاپلاک18'],tag:'PROP ACACIA 18',title:'پرونده ملک: خیابان اقاقیا، پلاک ۱۸',html:
-      '<div class="doc"><b style="font-family:var(--font-ui)">فهرست اشیای جامانده</b><span class="meta">شرکت نظافت «برق»، ۱ نوامبر ۲۰۲۵، صبح روز بعد از مهمانی. هر شیء شماره دارد.</span>'+
-      '<div class="tbl"><table><thead><tr><th>شماره</th><th>شیء</th><th>محل</th></tr></thead><tbody>'+
-      '<tr><td class="num">03</td><td>جاروی تزئینی جادوگر</td><td>ورودی</td></tr>'+
-      '<tr><td class="num">09</td><td>تندیس شیشه‌ای، لبه شکسته</td><td>اتاق مطالعه، کف</td></tr>'+
-      '<tr><td class="num">11</td><td>لیوان با ته سیگار</td><td>حیاط، کنار چراغ</td></tr>'+
-      '<tr><td class="num">14</td><td>پوشه مقوایی</td><td>زیر میز اتاق مطالعه</td></tr>'+
-      '<tr><td class="num">22</td><td>دستکش سفید با لکه قرمز</td><td>روشویی</td></tr>'+
-      '<tr><td class="num">27</td><td>جعبه چوبی قفل‌دار</td><td>انباری آشپزخانه، پشت کیسه برنج</td></tr>'+
-      '<tr><td class="num">31</td><td>جمجمه تزئینی با سنسور و کارت حافظه</td><td>اتاق مطالعه، قفسه</td></tr></tbody></table></div>'+
-      '<span class="meta">شماره هر شیء را جستجو کنید.</span></div>'+
-      '<div class="doc"><b style="font-family:var(--font-ui)">سیستم دوربین منزل</b><p>هشت دوربین. فیلم‌های ۳۱ اکتبر در <b>۱ نوامبر ساعت ۰۲:۱۰</b> از دستگاه پاک شده‌اند. کاربر: <span class="num">shahab.s</span></p><p>نسخه پشتیبان ابری هنوز هست، ولی فقط با رمز مالک قبلی، بهرام صدری، باز می‌شود. رمز چهار رقم است.</p></div>'+
-      '<form class="code" data-lock="cams"><input type="text" inputmode="numeric" autocomplete="off" placeholder="رمز مالک قبلی" aria-label="رمز دوربین‌ها" id="in-cams"><button type="submit">باز کن</button></form><p class="msg" aria-live="polite"></p>'},
-    i03:{keys:['03','3'],tag:'ITEM 03',title:'شیء ۰۳',html:'<div class="doc"><p>جاروی تزئینی جادوگر. چیزی به آن نچسبیده. فقط تزئینات است.</p></div>'},
-    i09:{keys:['09','9'],tag:'ITEM 09',title:'شیء ۰۹: تندیس شیشه‌ای',html:'<div class="doc"><p>تندیس شیشه‌ای سنگین، جایزه «بهترین سرمایه‌گذار سال ۱۹۹۹». لبه‌اش شکسته. روی شکستگی لکه قهوه‌ای خشک‌شده هست. شرکت نظافت فکر کرده شراب است.</p></div>'},
-    i11:{keys:['11'],tag:'ITEM 11',title:'شیء ۱۱: لیوان حیاط',html:'<div class="doc"><p>لیوان نیمه‌پر با سه ته سیگار، کنار چراغ حیاط. یکی از ته سیگارها مارک خاصی است که فقط شهاب می‌کشد.</p></div>'},
-    i14:{keys:['14'],tag:'ITEM 14',title:'شیء ۱۴: پوشه زیر میز',html:'<div class="doc"><p>پوشه مقوایی، کمی مچاله، زیر میز اتاق مطالعه. شرکت نظافت آن را دست‌نخورده تحویل داده.</p></div>'+order('۱۴','پوشه زیر میز اتاق مطالعه')},
-    i22:{keys:['22'],tag:'ITEM 22',title:'شیء ۲۲: دستکش',html:'<div class="doc"><p>یک دستکش سفید پارچه‌ای، خیس، با لکه‌های قرمز تند. در سینک روشویی طبقه پایین.</p></div>'},
-    i27:{keys:['27'],tag:'ITEM 27',title:'شیء ۲۷: جعبه چوبی',html:'<div class="doc"><p>جعبه چوبی کوچک با قفل چهاررقمی، پشت کیسه‌های برنج انباری. شرکت نظافت بازش نکرده.</p></div>'+order('۲۷','جعبه چوبی قفل‌دار','قفل را خودتان باید باز کنید.')},
-    i31:{keys:['31'],tag:'ITEM 31',title:'شیء ۳۱: جمجمه تزئینی',needs:'cams',html:
-      '<p class="muted">جمجمه با سنسور حرکت. وقتی کسی جلویش رد می‌شد، چند ثانیه صدا ضبط می‌کرد. کارت حافظه با همان سیستم خانه باز شد.</p>'+
-      '<div class="tape"><p class="h">REC 23:11:52</p><p class="n">[موسیقی مهمانی، نویز]</p>'+
-      '<p class="v1">صدای ۱: ...پولی که به من دادی کافی نیست. اگر بخواهی اسم من را وسط بکشی...</p>'+
-      '<p class="v2">صدای ۲: پول؟ پولی که پدرم هر ماه می‌فرستاد را می‌گویی؟</p>'+
-      '<p class="v1">صدای ۱: پدرت؟ داری مسخره‌ام می‌کنی؟ همه چیز را پاک کردم، همان‌طور که گفتی.</p>'+
-      '<p class="n">[نویز، چهار ثانیه نامفهوم]</p>'+
-      '<p class="v2">صدای ۲: ...تو هم با آن‌ها هستی. من فقط آمده‌ام حقم را بگیرم.</p>'+
-      '<p class="v1">صدای ۱: حق تو؟ تو که همه چیز را داری!</p>'+
-      '<p class="n">[صدای ضربه. چیزی شیشه‌ای می‌شکند. سکوت. موسیقی]</p>'+
-      '<p class="h">REC 23:25:31</p><p class="n">صدای ۳، آهسته: ...نه. نه، نه، نه. این که...</p></div>'},
-    cams:{keys:[],tag:'CCTV 31-10',title:'نسخه پشتیبان دوربین‌ها، شب ۳۱ اکتبر',html:'<p class="muted">هشت فایل. فقط سایه‌ها و ساعت‌ها. ساعت‌ها را کنار هم بگذارید.</p><div class="clips" id="clips"></div>'},
-    mother:{keys:['0471629014','471629014','32471629014'],tag:'TEL 0471 62 90 14',title:'آگهی‌های مفقودی',html:
-      '<p class="muted">این شماره در ده‌ها آگهی کاغذی و آنلاین تکرار شده است.</p>'+
-      '<div class="doc"><span class="stamp">گمشده</span><p style="font-size:24px;font-family:var(--font-ui);font-weight:800">شهرام مرادی</p>'+
-      '<p>متولد ۴ مارس ۱۹۹۲. قد حدود ۱۸۰، موی تیره. آخرین بار شب ۳۱ اکتبر ۲۰۲۵ دیده شده، با لباس هالووین: شنل سیاه و ماسک سفید.</p>'+
-      '<p>به مادرش گفته بود به مهمانی‌ای در خیابان اقاقیا می‌رود تا «حقش را بگیرد».</p>'+
-      '<p>هر خبری دارید به مادرش، <b>لیلا مرادی</b>، زنگ بزنید: <span class="num">0471 62 90 14</span></p>'+
-      '<span class="meta">در عکس آگهی، شهرام به طرز عجیبی شبیه شهاب صدری است.</span></div>'+
-      '<p class="muted">پرونده آخر باز شد. پایین صفحه.</p>'}
+      '<tr><td class="num">0731</td><td>نوید صالحی</td><td class="num">2012–2023</td></tr></tbody></table></div></div>'}
   };
   var ORDER_FINAL=['mother'];
 
   var HINTS=[
-    ['شماره حسابی که هر ماه پول می‌گرفت، در گردش حساب ناقص است.','پشت عکس سوخته را نگاه کنید. دو رقم آنجاست.','دو رقم پشت عکس، بعد دو رقم آخر حساب. جستجو کنید: ۸۳۴۷'],
-    ['گزارش حسابرسی می‌گوید چه کسی دستور پرداخت ماهانه را ثبت کرد.','شماره کارمند هم یک شناسه است.','جستجو کنید: ۰۴۱۲'],
-    ['پاکت ۰۴۱۲ را باز کرده‌اید؟ همه برگه‌ها را تا آخر بخوانید.','آخرین صفحه دفتر خاطرات از یک وکیل حرف می‌زند.','شماره پرونده وکیل را جستجو کنید: ۱۷/۱۹۹۳'],
-    ['پرونده وکیل می‌گوید شهاب از کجا تماس گرفت.','شماره تلفن هم شناسه است.','جستجو کنید: ۰۲ ۶۴۸ ۳۱ ۰۹'],
-    ['پیام دوم از پوشه‌ای حرف می‌زند که به مهمانی رفت. مهمانی کجا بود؟','آدرس خانه در روزنامه آمده.','جستجو کنید: اقاقیا ۱۸'],
-    ['پوشه را پیدا کردید؟ شماره‌اش در فهرست اشیا هست. دوربین‌ها رمز مالک قبلی را می‌خواهند. فرانک درباره رمزهای آقا چیزی نوشته بود.','رمزها تاریخ تولد پسر پنهانی بود، روز و ماه. دفتر می‌گوید پسر کی یک‌ماهه شد؟','۴ آوریل یک‌ماهه شد، پس ۴ مارس به دنیا آمده. رمز: ۰۴۰۳'],
-    ['فیلم آشپزخانه را ببینید. آن جعبه حالا کجاست؟ فهرست اشیا را دوباره بخوانید.','روی جعبه «ش ♥» خراشیده‌اند. وصیت‌نامه تاریخ تولد یک «ش» را دارد.','رمز جعبه: ۱۲۰۷. کلید داخل جعبه پاکت «پایین» را باز می‌کند. روی گوشی شکسته یک شماره هست. جستجویش کنید.'],
+    ['شماره حسابی که هر ماه پول می‌گرفت، در صورت‌حساب ناقص است.','پشت عکس سوخته را نگاه کنید. دو رقم آنجاست.','دو رقم پشت عکس، بعد دو رقم آخر حساب. جستجو کنید: ۸۳۴۷'],
     []
   ];
   function stage(){var f=S.found;var has=function(k){return f.indexOf(k)>-1};
-    if(!has('acc8347'))return 0;if(!has('e0412'))return 1;if(!has('lawyer'))return 2;if(!has('phone'))return 3;if(!has('house'))return 4;if(!has('cams'))return 5;if(!has('mother'))return 6;return 7}
+    if(!has('acc8347'))return 0;return 1}
   function renderHints(){
     var st=stage(),box=document.getElementById('hints');box.innerHTML='';
-    document.getElementById('hintbox').hidden=st>=7;
+    document.getElementById('hintbox').hidden=!HINTS[st].length;
     var list=HINTS[st],n=S.hints[st]||0;
     for(var i=0;i<n&&i<list.length;i++){var p=document.createElement('p');p.className='hint';p.textContent='راهنمایی '+(i+1)+': '+list[i];box.appendChild(p)}
     if(n<list.length){var b=document.createElement('button');b.type='button';b.className='ghost';b.textContent=n?'راهنمایی بیشتر':'یک راهنمایی بدهید';
@@ -225,7 +150,7 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
   function findRecord(q){
     var n=norm(q);if(!n)return null;
     for(var id in R){if(R[id].keys.indexOf(n)>-1)return id}
-    if(n.indexOf('اقاقیا')>-1)return 'house';
+
     return null;
   }
   var lastNew=null;
@@ -261,17 +186,7 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
   }
 
   // ---------- final ----------
-  var FINAL=[
-    ['زن توی عکس نیم‌سوخته کیست؟',['فرانک رادمنش','لیلا، مادر شهرام','همسر بهرام صدری'],1],
-    ['پرداخت ماهانه به حساب ••۸۳۴۷ برای چه بود؟',['برای لیلا و پسر پنهانی بهرام، شهرام','بدهی قدیمی به یک شریک','حقوق مخفی فرانک'],0],
-    ['۸۵ هزار یورو چرا به مهرداد رسید؟',['بابت خرید تجهیزات','تا ردّ پرداخت‌ها را از دفاتر پاک کند و کسی از برادر شهاب باخبر نشود','چون از شهاب طلب داشت'],1],
-    ['چه کسی در اتاق مطالعه ضربه را زد؟',['شهاب','امین','مهرداد'],2],
-    ['چرا مهرداد آدم اشتباهی را زد؟',['در تاریکی، برادرِ شبیه شهاب با لباسی مثل لباس شهاب آنجا بود','از اول می‌خواست شهرام را بزند','مست بود و کسی را نمی‌شناخت'],0],
-    ['شهاب بعد از آن چه کرد؟',['به پلیس زنگ زد','برادرش را شناخت، با مهرداد جسد را از راه مخفی پایین برد و بعد فیلم‌ها را پاک کرد','از خانه رفت'],1],
-    ['امین و مارال چه دیده یا شنیده بودند؟',['هیچ‌چیز','امین مشاجره را شنید؛ مارال پایین دو نفر را دید که چیزی می‌کشیدند','هر دو ضربه را دیدند'],1],
-    ['دست‌های قرمز مهسا و دستکش روشویی چه بود؟',['رنگ خون مصنوعی تزئینات','خون شهرام','رنگ مو'],0],
-    ['چه کسی امشب شما را دعوت کرد و چرا؟',['شهاب، برای آشتی','لیلا، تا بفهمد پسرش کجاست','مهرداد، تا خودش را تبرئه کند'],1]
-  ];
+  var FINAL=[];
   function renderFinal(){
     var wrap=document.getElementById('final-qs');wrap.innerHTML='';var done=S.fin||0;
     for(var i=0;i<FINAL.length&&i<=done;i++)(function(i){
