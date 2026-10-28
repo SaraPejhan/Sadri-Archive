@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>پیغام‌گیر منزل صدری</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600&family=VT323&display=swap">
+<style>
+/* Layout: one answering-machine body, centered; LCD on top, keypad below, messages list after unlocking. */
+:root{
+  --bg:#141210;--body:#2a2723;--edge:#3b3732;--lcd:#9fb08a;--lcd-ink:#1d2618;--ink:#e6e0d4;--muted:#8f887c;--led:#d43b2f;
+  --ui:"Vazirmatn",Tahoma,sans-serif;--doc:"Noto Naskh Arabic","Vazirmatn",serif;--seg:"VT323",ui-monospace,monospace;
+  color-scheme:dark;
+}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+body{font-family:var(--ui);font-size:16px;line-height:1.7}
+.wrap{max-width:460px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.machine{background:linear-gradient(180deg,#34302b,#25221e);border:1px solid var(--edge);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:16px;box-shadow:0 18px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+.brand{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);direction:ltr;letter-spacing:.12em}
+.led{width:10px;height:10px;border-radius:50%;background:var(--led);box-shadow:0 0 8px var(--led);animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+.lcd{background:var(--lcd);color:var(--lcd-ink);border-radius:6px;padding:12px 14px;font-family:var(--seg);font-size:30px;line-height:1.1;direction:ltr;text-align:left;box-shadow:inset 0 2px 6px rgba(0,0,0,.35);min-height:72px;display:flex;flex-direction:column;justify-content:center}
+.lcd small{font-size:20px;opacity:.75}
+.lbl{font-size:13px;color:var(--muted);text-align:center}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;direction:ltr}
+.keys button{font-family:var(--seg);font-size:28px;padding:10px 0;border-radius:10px;border:1px solid #4a453e;background:linear-gradient(180deg,#46413a,#37332d);color:var(--ink);cursor:pointer}
+.keys button:active{transform:translateY(1px)}
+.keys button:focus-visible,.msg button:focus-visible{outline:2px solid var(--lcd);outline-offset:2px}
+.list{display:flex;flex-direction:column;gap:10px}
+.msg{background:#1d1b18;border:1px solid var(--edge);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.msg .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.msg .when{font-family:var(--seg);font-size:22px;color:var(--lcd);direction:ltr}
+.msg button{font-family:var(--ui);font-size:14px;border-radius:8px;border:1px solid #4a453e;background:#2e2a25;color:var(--ink);padding:6px 14px;cursor:pointer}
+.msg audio{width:100%}
+.tr{font-family:var(--doc);font-size:16px;line-height:2;color:#d8d1c3;border-right:2px solid var(--edge);padding-right:10px}
+.err{color:#e48a7f;font-size:14px;text-align:center;min-height:1.4em}
+@media (prefers-reduced-motion:reduce){.led{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="machine">
+    <div class="brand"><span>TELEVOX TA-210 · DIGITAL ANSWERING SYSTEM</span><span class="led" aria-hidden="true"></span></div>
+    <div class="lcd" id="lcd" aria-live="polite"><span>05 NEW MSG</span><small>REMOTE CODE: _ _ _ _</small></div>
+
+    <section id="lock">
+      <p class="lbl">برای شنیدن پیام‌ها از راه دور، کد دسترسی چهاررقمی را وارد کنید.</p>
+      <div class="keys" id="keys"></div>
+      <p class="err" id="err"></p>
+    </section>
+
+    <section id="msgs" class="list" hidden></section>
+  </div>
+</div>
+<script>
+(function(){
+  var MSGS=[
+    ['16-10-2025  10:12','سلام، از تالار آرامش تماس می‌گیرم. برای مراسم یادبود شنبه ساعت چهار همه‌چیز آماده است. فقط لطفاً تعداد مهمان‌ها را تا فردا تأیید کنید. ممنون.'],
+    ['21-10-2025  16:40','آقای صدری، سلام. از دفتر وکالت مستوفی تماس می‌گیرم. پرونده‌ای که خواسته بودید آماده است، همراه پاکت پیوستش. فردا صبح تشریف بیاورید. لطفاً کارت شناسایی همراهتان باشد.'],
+    ['22-10-2025  21:07','شهاب، پول رسید. هشتاد و پنج تا. ولی اگه کسی بفهمه دفترا رو من عوض کردم، من تنها نمی‌افتم. کپی همه‌شون پیش خودمه.'],
+    ['24-10-2025  01:30','پیامت رو دیدم. تهدیدم نکن شهاب. شنبه تو مهمونی رو در رو حرف می‌زنیم. پوشه رو هم با خودم میارم که ببینی شوخی ندارم.'],
+    ['31-10-2025  23:51','الو؟ ببخشید این وقت شب... پسرم گفت امشب میاد اونجا. گفت کار مهمی داره. گوشیش رو جواب نمیده. اگه اونجاست، بگید به مادرش زنگ بزنه... (بوق قطع)']
+  ];
+  var CODE='3109', typed='';
+  var lcd=document.getElementById('lcd'), keys=document.getElementById('keys'), err=document.getElementById('err');
+  function show(){var m='';for(var i=0;i<4;i++)m+=(i<typed.length?'* ':'_ ');lcd.innerHTML='<span>05 NEW MSG</span><small>REMOTE CODE: '+m.trim()+'</small>';}
+  function press(k){
+    if(k==='C'){typed='';err.textContent='';show();return}
+    if(k==='#')return;
+    if(typed.length>=4)return;
+    typed+=k;show();
+    if(typed.length===4){
+      if(typed===CODE){setTimeout(open,350)}
+      else{err.textContent='کد اشتباه است.';setTimeout(function(){typed='';show()},700)}
+    }
+  }
+  ['1','2','3','4','5','6','7','8','9','C','0','#'].forEach(function(k){
+    var b=document.createElement('button');b.type='button';b.textContent=k==='C'?'✕':k;b.setAttribute('aria-label',k==='C'?'پاک کردن':k);
+    b.addEventListener('click',function(){press(k)});keys.appendChild(b);
+  });
+  document.addEventListener('keydown',function(e){if(!document.getElementById('lock').hidden){if(/^[0-9]$/.test(e.key))press(e.key);if(e.key==='Backspace'||e.key==='Escape')press('C')}});
+  function open(){
+    document.getElementById('lock').hidden=true;
+    lcd.innerHTML='<span>PLAYBACK  05 MSG</span><small>ACCESS GRANTED</small>';
+    var list=document.getElementById('msgs');list.hidden=false;
+    MSGS.forEach(function(m,i){
+      var d=document.createElement('div');d.className='msg';
+      d.innerHTML='<div class="top"><span class="when">MSG '+(i+1)+' · '+m[0]+'</span><button type="button" class="tbtn">رونوشت</button></div>';
+      var au=document.createElement('audio');au.controls=true;au.preload='none';au.src='audio/msg'+(i+1)+'.mp3';
+      var tr=document.createElement('p');tr.className='tr';tr.textContent=m[1];tr.hidden=true;
+      au.addEventListener('error',function(){au.remove();tr.hidden=false;d.querySelector('.tbtn').hidden=true});
+      d.querySelector('.tbtn').addEventListener('click',function(){tr.hidden=!tr.hidden});
+      d.appendChild(au);d.appendChild(tr);list.appendChild(d);
+      au.addEventListener('play',function(){lcd.innerHTML='<span>PLAY MSG '+(i+1)+'</span><small>'+m[0]+'</small>'});
+    });
+    // probe once: if no audio files exist, show transcripts directly
+    var probe=new Audio();probe.preload='metadata';probe.src='audio/msg1.mp3';
+    probe.addEventListener('error',function(){document.querySelectorAll('.msg audio').forEach(function(a){a.dispatchEvent(new Event('error'))})});
+  }
+  show();
+})();
+</script>
+</body>
+</html>

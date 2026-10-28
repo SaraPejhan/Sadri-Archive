@@ -67,6 +67,13 @@ th{font-weight:600;font-size:12px;opacity:.75}
 .letter{font-family:var(--font-doc);font-size:18px;line-height:2.1;display:flex;flex-direction:column;gap:14px}
 footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px}
 [hidden]{display:none!important}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.ph{margin:0;background:#f4f1ea;padding:8px 8px 12px;border-radius:2px;display:flex;flex-direction:column;gap:6px;color:#2b2620}
+.ph img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#222}
+.ph figcaption{display:flex;flex-direction:column;gap:4px;font-size:13px}
+.ph .num{color:#d2691e;font-weight:600}
+.ph img + figcaption .pd{display:none}
+.pd{font-family:var(--font-doc);line-height:1.8}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
@@ -109,7 +116,7 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
     </div>
   </section>
 
-  <footer><span class="num">ARCHIVE v5.0</span><button type="button" class="ghost" id="reset">شروع دوباره</button></footer>
+  <footer><span class="num">ARCHIVE v6.0</span><button type="button" class="ghost" id="reset">شروع دوباره</button></footer>
 </div>
 
 <script>
@@ -120,8 +127,8 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       .replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\s‌\-\.\/\\•·_+,:]/g,'').toLowerCase();
   }
   var S={found:[],hints:{}};
-  try{var raw=JSON.parse(localStorage.getItem('sadri-v5')||'null');if(raw&&raw.found)S=raw}catch(e){}
-  function save(){try{localStorage.setItem('sadri-v5',JSON.stringify(S))}catch(e){}}
+  try{var raw=JSON.parse(localStorage.getItem('sadri-v6')||'null');if(raw&&raw.found)S=raw}catch(e){}
+  function save(){try{localStorage.setItem('sadri-v6',JSON.stringify(S))}catch(e){}}
 
   function order(code,label,extra){return '<div class="order"><b>پاکت «'+code+'» را باز کنید.</b><span>'+label+'</span>'+(extra?'<span>'+extra+'</span>':'')+'</div>'}
 
@@ -162,12 +169,10 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
     e1140:{keys:['1140','1140','امیدسلطانی','امید','سلطانی'],tag:'HR 1140',title:'پرونده پرسنلی <span class="num">1140</span>',html:'<div class="doc"><p><b>امید سلطانی</b>، کارآموز مالی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
     lawyer:{keys:['171993','w171993'],tag:'LAW 17/1993',title:'دفتر وکالت مستوفی، پرونده ۱۷/۱۹۹۳',html:
       '<div class="doc"><span class="stamp">وصیت‌نامه دوم</span><p>بخشی از متن، به خط بهرام صدری، ۳ آوریل ۱۹۹۳:</p>'+
-      '<p>«نیمی از سهم من در گروه به پسرم شهاب، متولد ۱۲ ژوئیه ۱۹۹۱، و نیم دیگر به پسرم ش.، که مادرش اسمش را می‌داند و من تا امروز جرئت نکردم بنویسم.»</p>'+
-      '<span class="meta">یادداشت دفتر:</span><p>این پرونده در ۲۲ اکتبر ۲۰۲۵ به آقای <b>شهاب صدری</b> تحویل شد. ایشان قبلاً از تلفن منزل تماس گرفته بودند: <span class="num">02 648 31 09</span></p><p>نسخه دومی در دفتر باقی نمانده است.</p></div>'},
-    phone:{keys:['026483109','6483109','3226483109'],tag:'TEL 02 648 31 09',title:'پیغام‌گیر تلفن منزل',html:
-      '<div class="tape"><p class="h">MSG 1 · 22-10-2025 · 21:07</p><p class="v1">صدای مرد: شهاب، پول رسید. هشتاد و پنج تا. ولی اگه کسی بفهمه دفترا رو من عوض کردم، من تنها نمی‌افتم. کپی همه‌شون پیش خودمه.</p>'+
-      '<p class="h">MSG 2 · 24-10-2025 · 01:30</p><p class="v1">همان صدا: پیامت رو دیدم. تهدیدم نکن شهاب. شنبه تو مهمونی رو در رو حرف می‌زنیم. پوشه رو هم با خودم میارم که ببینی شوخی ندارم.</p>'+
-      '<p class="h">MSG 3 · 31-10-2025 · 23:51</p><p class="v3">صدای یک زن: الو؟ ببخشید این وقت شب... پسرم گفت امشب میاد اونجا. گفت کار مهمی داره. گوشیش رو جواب نمیده. اگه اونجاست بگید به مادرش زنگ بزنه... [قطع]</p></div>'},
+      '<p>«نیمی از سهم من در گروه به پسرم شهاب، متولد ۱۲ ژوئیه ۱۹۹۱. نیم دیگر به کسی که نامش در پاکت مهر و موم پیوست این وصیت‌نامه آمده است. این پاکت فقط پس از مرگ من باز شود.»</p>'+
+      '<span class="meta">یادداشت دفتر:</span><p>اصل وصیت‌نامه و پاکت مهر و موم پیوست در ۲۲ اکتبر ۲۰۲۵ به آقای <b>شهاب صدری</b> تحویل شد. ایشان روز قبل از تلفن منزل تماس گرفته بودند: <span class="num">02 648 31 09</span></p><p>پاکت پیوست هنگام تحویل باز نشده بود. نسخه دومی در دفتر باقی نمانده است.</p></div>'},
+    phone:{keys:['026483109','6483109','3226483109'],tag:'TEL 02 648 31 09',title:'خط ثابت منزل صدری',html:
+      '<div class="doc"><p>خط ثابت منزل، خیابان اقاقیا. مشترک: بهرام صدری.</p><p>این خط به یک دستگاه پیغام‌گیر وصل است. پیام‌ها روی خود دستگاه ذخیره می‌شوند و در بایگانی شرکت نیستند.</p><p>دسترسی از راه دور به پیغام‌گیر: چهار رقم آخر همین شماره.</p></div>'},
     house:{keys:['اقاقیا','اقاقیا18','خیاباناقاقیا','خیاباناقاقیا18','اقاقیاپلاک18','خیاباناقاقیاپلاک18'],tag:'PROP ACACIA 18',title:'پرونده ملک: خیابان اقاقیا، پلاک ۱۸',html:
       '<div class="doc"><b style="font-family:var(--font-ui)">فهرست اشیای جامانده</b><span class="meta">شرکت نظافت «برق»، ۱ نوامبر ۲۰۲۵، صبح روز بعد از مهمانی. هر شیء شماره دارد.</span>'+
       '<div class="tbl"><table><thead><tr><th>شماره</th><th>شیء</th><th>محل</th></tr></thead><tbody>'+
@@ -175,6 +180,7 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       '<tr><td class="num">09</td><td>تندیس شیشه‌ای، لبه شکسته</td><td>اتاق مطالعه، کف</td></tr>'+
       '<tr><td class="num">11</td><td>لیوان با ته سیگار</td><td>حیاط، کنار چراغ</td></tr>'+
       '<tr><td class="num">14</td><td>پوشه مقوایی</td><td>زیر میز اتاق مطالعه</td></tr>'+
+      '<tr><td class="num">18</td><td>دوربین عکاسی یک‌بارمصرف، فیلم تمام‌شده</td><td>کنار ظرف پانچ</td></tr>'+
       '<tr><td class="num">22</td><td>دستکش سفید با لکه قرمز</td><td>روشویی</td></tr>'+
       '<tr><td class="num">27</td><td>جعبه چوبی قفل‌دار</td><td>انباری آشپزخانه، پشت کیسه برنج</td></tr>'+
       '<tr><td class="num">31</td><td>جمجمه تزئینی با سنسور و کارت حافظه</td><td>اتاق مطالعه، قفسه</td></tr></tbody></table></div>'+
@@ -185,6 +191,19 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
     i09:{keys:['09','9'],tag:'ITEM 09',title:'شیء ۰۹: تندیس شیشه‌ای',html:'<div class="doc"><p>تندیس شیشه‌ای سنگین، جایزه «بهترین سرمایه‌گذار سال ۱۹۹۹». لبه‌اش شکسته. روی شکستگی لکه قهوه‌ای خشک‌شده هست. شرکت نظافت فکر کرده شراب است.</p></div>'},
     i11:{keys:['11'],tag:'ITEM 11',title:'شیء ۱۱: لیوان حیاط',html:'<div class="doc"><p>لیوان نیمه‌پر با سه ته سیگار، کنار چراغ حیاط. یکی از ته سیگارها مارک خاصی است که فقط شهاب می‌کشد.</p></div>'},
     i14:{keys:['14'],tag:'ITEM 14',title:'شیء ۱۴: پوشه زیر میز',html:'<div class="doc"><p>پوشه مقوایی، کمی مچاله، زیر میز اتاق مطالعه. شرکت نظافت آن را دست‌نخورده تحویل داده.</p></div>'+order('۱۴','پوشه زیر میز اتاق مطالعه')},
+    i18:{keys:['18'],tag:'ITEM 18',title:'شیء ۱۸: دوربین یک‌بارمصرف',html:
+      '<div class="doc"><p>دوربین یک‌بارمصرف، فیلمش تمام شده. شرکت نظافت آن را برای ظهور به «عکاسی آفتاب» داد. ۹ عکس از ۲۷ عکس قابل استفاده بود.</p></div>'+
+      '<div class="gallery">'+
+'<figure class="ph"><img src="gallery/g1.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 21:30</span><span class="pd">عکس دسته‌جمعی در پذیرایی. همه با لباس هالووین. فقط یک نفر شنل سیاه و ماسک سفید دارد.</span></figcaption></figure>'+
+'<figure class="ph"><img src="gallery/g2.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 22:38</span><span class="pd">ظرف پانچ قرمز و تزئینات میز. کسی در قاب نیست.</span></figcaption></figure>'+
+'<figure class="ph"><img src="gallery/g3.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 22:55</span><span class="pd">ورودی خانه، تار و کج. کسی با شنل سیاه و ماسک سفید از در وارد می‌شود. پشتش به دوربین است.</span></figcaption></figure>'+
+'<figure class="ph"><img src="gallery/g4.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 23:03</span><span class="pd">حیاط، کنار چراغ. شهاب با شنل سیاه سیگار می‌کشد. ماسک سفیدش در دستش است.</span></figcaption></figure>'+
+'<figure class="ph"><img src="gallery/g5.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 23:13</span><span class="pd">راهرو، پس‌زمینه تار. مردی با گریم اسکلت از دری بیرون می‌آید، نزدیک در اتاق مطالعه.</span></figcaption></figure>'+
+'<figure class="ph"><img src="gallery/g6.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 23:22</span><span class="pd">سلفی در آشپزخانه: زنی با کلاه جادوگر، مردی با گریم اسکلت، زنی با شاخ قرمز. شهاب و مهرداد در عکس نیستند.</span></figcaption></figure>'+
+'<figure class="ph"><img src="gallery/g7.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 23:47</span><span class="pd">عکس دوم در آشپزخانه. حالا زن با شاخ قرمز هم نیست.</span></figcaption></figure>'+
+'<figure class="ph"><img src="gallery/g8.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 23:56</span><span class="pd">روشویی، فلاش تند. زنی با کلاه جادوگر جلوی آینه، دست‌هایش قرمز. روی آینه رد قرمز کشیده شده.</span></figcaption></figure>'+
+'<figure class="ph"><img src="gallery/g9.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 00:10</span><span class="pd">کنار در آشپزخانه. زنی با شاخ قرمز، زانوهای شلوارش خاکی، صورتش رنگ‌پریده.</span></figcaption></figure>'+
+      '</div>'},
     i22:{keys:['22'],tag:'ITEM 22',title:'شیء ۲۲: دستکش',html:'<div class="doc"><p>یک دستکش سفید پارچه‌ای، خیس، با لکه‌های قرمز تند. در سینک روشویی طبقه پایین.</p></div>'},
     i27:{keys:['27'],tag:'ITEM 27',title:'شیء ۲۷: جعبه چوبی',html:'<div class="doc"><p>جعبه چوبی کوچک با قفل چهاررقمی، پشت کیسه‌های برنج انباری. شرکت نظافت بازش نکرده.</p></div>'+order('۲۷','جعبه چوبی قفل‌دار','قفل را خودتان باید باز کنید.')},
     i31:{keys:['31'],tag:'ITEM 31',title:'شیء ۳۱: جمجمه تزئینی',needs:'cams',html:
@@ -211,17 +230,17 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
   var ORDER_FINAL=['mother'];
 
   var HINTS=[
-    ['شماره حسابی که هر ماه پول می‌گرفت، در گردش حساب ناقص است.','پشت عکس سوخته را نگاه کنید. دو رقم آنجاست.','دو رقم پشت عکس، بعد دو رقم آخر حساب. جستجو کنید: ۸۳۴۷'],
+    ['شماره حسابی که هر ماه پول می‌گرفت، در صورت‌حساب ناقص است.','پشت عکس سوخته را نگاه کنید. دو رقم آنجاست.','دو رقم پشت عکس، بعد دو رقم آخر حساب. جستجو کنید: ۸۳۴۷'],
     ['یافته ۵ می‌گوید چه کسی می‌توانست دستور پرداخت را ثبت کند. پاراف «ف.ر.» را در پرونده‌های کاغذی کارکنان دنبال کنید.','دو نفر پاراف «ف.ر.» دارند. فقط یکی در سال ۱۹۹۲ دستیار شخصی مدیرعامل بود. پرونده‌اش می‌گوید بقیه‌اش در بایگانی دیجیتال است.','جستجو کنید: ۰۴۱۲ یا فرانک رادمنش'],
-    ['پاکت ۰۴۱۲ را باز کرده‌اید؟ همه برگه‌ها را تا آخر بخوانید.','آخرین صفحه دفتر خاطرات از یک وکیل حرف می‌زند.','شماره پرونده وکیل را جستجو کنید: ۱۷/۱۹۹۳'],
-    ['پرونده وکیل می‌گوید شهاب از کجا تماس گرفت.','شماره تلفن هم شناسه است.','جستجو کنید: ۰۲ ۶۴۸ ۳۱ ۰۹'],
-    ['پیام دوم از پوشه‌ای حرف می‌زند که به مهمانی رفت. مهمانی کجا بود؟','آدرس خانه در روزنامه آمده.','جستجو کنید: اقاقیا ۱۸'],
-    ['پوشه را پیدا کردید؟ شماره‌اش در فهرست اشیا هست. دوربین‌ها رمز مالک قبلی را می‌خواهند. فرانک درباره رمزهای آقا چیزی نوشته بود.','رمزها تاریخ تولد پسر پنهانی بود، روز و ماه. دفتر می‌گوید پسر کی یک‌ماهه شد؟','۴ آوریل یک‌ماهه شد، پس ۴ مارس به دنیا آمده. رمز: ۰۴۰۳'],
+    ['پاکت ۰۴۱۲ را باز کرده‌اید؟ دفتر خاطرات را تا آخر بخوانید.','یکی از صفحه‌ها از یک وکیل و یک شماره پرونده حرف می‌زند.','جستجو کنید: ۱۷/۱۹۹۳'],
+    ['پرونده وکیل یک شماره تلفن دارد. در این خانه دستگاهی هست که از اول شب جلوی چشمتان بوده.','پیغام‌گیر منزل کد می‌خواهد: چهار رقم آخر تلفن منزل. پیام‌ها از پوشه‌ای حرف می‌زنند که به مهمانی آمد. مهمانی کجا بود؟','کد پیغام‌گیر ۳۱۰۹ است. آدرس خانه در روزنامه است. جستجو کنید: اقاقیا ۱۸'],
+    ['فهرست اشیای جامانده را بخوانید. هر شیء شماره دارد و قابل جستجوست.','پوشه کجا جا ماند؟ کسی آن شب عکس می‌گرفت؟','جستجو کنید: ۱۴ و ۱۸'],
+    ['دوربین‌ها رمز مالک قبلی را می‌خواهند. فرانک درباره رمزهای آقا چیزی نوشته بود.','رمزها «روزی که زندگی آقا عوض شد» بود، روز و ماه. دفتر خاطرات می‌گوید آن روز کی بود.','ورودی ۵ مارس می‌گوید «دیروز». پس ۴ مارس. رمز: ۰۴۰۳'],
     ['فیلم آشپزخانه را ببینید. آن جعبه حالا کجاست؟ فهرست اشیا را دوباره بخوانید.','روی جعبه «ش ♥» خراشیده‌اند. وصیت‌نامه تاریخ تولد یک «ش» را دارد.','رمز جعبه: ۱۲۰۷. کلید داخل جعبه پاکت «پایین» را باز می‌کند. روی گوشی شکسته یک شماره هست. جستجویش کنید.'],
     []
   ];
   function stage(){var f=S.found;var has=function(k){return f.indexOf(k)>-1};
-    if(!has('acc8347'))return 0;if(!has('e0412'))return 1;if(!has('lawyer'))return 2;if(!has('phone'))return 3;if(!has('house'))return 4;if(!has('cams'))return 5;if(!has('mother'))return 6;return 7}
+    if(!has('acc8347'))return 0;if(!has('e0412'))return 1;if(!has('lawyer'))return 2;if(!has('house'))return 3;if(!has('i14')||!has('i18'))return 4;if(!has('cams'))return 5;if(!has('mother'))return 6;return 7}
   function renderHints(){
     var st=stage(),box=document.getElementById('hints');box.innerHTML='';
     document.getElementById('hintbox').hidden=st>=7;
@@ -322,10 +341,14 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
     var box=document.getElementById('clips');if(!box)return;box.innerHTML='';
     CLIPS.forEach(function(cl){
       var d=document.createElement('div');d.className='clip';
+      var vid=document.createElement('video');vid.src='videos/clip'+cl.n+'.mp4';vid.controls=true;vid.playsInline=true;vid.preload='metadata';vid.style.cssText='width:100%;aspect-ratio:16/9;background:#000;border-radius:3px;display:block';
       var cv=document.createElement('canvas');cv.width=640;cv.height=360;cv.setAttribute('aria-label','فیلم دوربین '+cl.n);
       var bar=document.createElement('div');bar.className='clip-bar';var lab=document.createElement('span');lab.textContent='فیلم '+cl.n;
       var btn=document.createElement('button');btn.type='button';btn.className='ghost';btn.textContent='پخش';
-      bar.appendChild(lab);bar.appendChild(btn);d.appendChild(cv);d.appendChild(bar);box.appendChild(d);
+      bar.appendChild(lab);bar.appendChild(btn);d.appendChild(vid);d.appendChild(bar);box.appendChild(d);
+      cv.hidden=true;d.insertBefore(cv,bar);
+      vid.addEventListener('error',function(){vid.remove();cv.hidden=false;});
+      vid.addEventListener('loadedmetadata',function(){btn.hidden=true;});
       var st={t:0,playing:false,last:0};draw(cv,cl,0);
       btn.addEventListener('click',function(){
         if(st.playing){st.playing=false;btn.textContent='پخش';return}
