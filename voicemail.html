@@ -44,7 +44,7 @@ body{font-family:var(--ui);font-size:16px;line-height:1.7}
 <div class="wrap">
   <div class="machine">
     <div class="brand"><span>TELEVOX TA-210 · DIGITAL ANSWERING SYSTEM</span><span class="led" aria-hidden="true"></span></div>
-    <div class="lcd" id="lcd" aria-live="polite"><span>05 NEW MSG</span><small>REMOTE CODE: _ _ _ _</small></div>
+    <div class="lcd" id="lcd" aria-live="polite"><span>06 NEW MSG</span><small>REMOTE CODE: _ _ _ _</small></div>
 
     <section id="lock">
       <p class="lbl">برای شنیدن پیام‌ها از راه دور، کد دسترسی چهاررقمی را وارد کنید.</p>
@@ -62,11 +62,12 @@ body{font-family:var(--ui);font-size:16px;line-height:1.7}
     ['21-10-2025  16:40','آقای صدری، سلام. از دفتر وکالت مستوفی تماس می‌گیرم. پرونده‌ای که خواسته بودید آماده است، همراه پاکت پیوستش. فردا صبح تشریف بیاورید. لطفاً کارت شناسایی همراهتان باشد.'],
     ['22-10-2025  21:07','شهاب، پول رسید. هشتاد و پنج تا. ولی اگه کسی بفهمه دفترا رو من عوض کردم، من تنها نمی‌افتم. کپی همه‌شون پیش خودمه.'],
     ['24-10-2025  01:30','پیامت رو دیدم. تهدیدم نکن شهاب. شنبه تو مهمونی رو در رو حرف می‌زنیم. پوشه رو هم با خودم میارم که ببینی شوخی ندارم.'],
-    ['31-10-2025  23:51','الو؟ ببخشید این وقت شب... پسرم گفت امشب میاد اونجا. گفت کار مهمی داره. گوشیش رو جواب نمیده. اگه اونجاست، بگید به مادرش زنگ بزنه... (بوق قطع)']
+    ['31-10-2025  23:51','الو؟ ببخشید این وقت شب... پسرم گفت امشب میاد اونجا. گفت کار مهمی داره. گوشیش رو جواب نمیده. اگه اونجاست، بگید به مادرش زنگ بزنه... (بوق قطع)'],
+    ['01-11-2025  10:40','سلام، از شرکت نظافت برق تماس می‌گیرم. امروز صبح بعد از مهمونی چند تا وسیله اینجا جا مونده بود: یه پوشه، یه دوربین عکاسی، یه جعبه قفل‌دار و چند تا چیز دیگه. چون ملک به اسم گروه صدریه، طبق قرارداد فهرستشون رو برای بایگانی شرکت فرستادیم، زیر پرونده همین ملک. هر وقت خواستید تحویل بگیرید، خبرمون کنید.']
   ];
   var CODE='3109', typed='';
   var lcd=document.getElementById('lcd'), keys=document.getElementById('keys'), err=document.getElementById('err');
-  function show(){var m='';for(var i=0;i<4;i++)m+=(i<typed.length?'* ':'_ ');lcd.innerHTML='<span>05 NEW MSG</span><small>REMOTE CODE: '+m.trim()+'</small>';}
+  function show(){var m='';for(var i=0;i<4;i++)m+=(i<typed.length?'* ':'_ ');lcd.innerHTML='<span>06 NEW MSG</span><small>REMOTE CODE: '+m.trim()+'</small>';}
   function press(k){
     if(k==='C'){typed='';err.textContent='';show();return}
     if(k==='#')return;
@@ -84,7 +85,7 @@ body{font-family:var(--ui);font-size:16px;line-height:1.7}
   document.addEventListener('keydown',function(e){if(!document.getElementById('lock').hidden){if(/^[0-9]$/.test(e.key))press(e.key);if(e.key==='Backspace'||e.key==='Escape')press('C')}});
   function open(){
     document.getElementById('lock').hidden=true;
-    lcd.innerHTML='<span>PLAYBACK  05 MSG</span><small>ACCESS GRANTED</small>';
+    lcd.innerHTML='<span>PLAYBACK  06 MSG</span><small>ACCESS GRANTED</small>';
     var list=document.getElementById('msgs');list.hidden=false;
     MSGS.forEach(function(m,i){
       var d=document.createElement('div');d.className='msg';
