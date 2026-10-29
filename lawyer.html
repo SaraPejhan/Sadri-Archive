@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>دفتر وکالت مستوفی</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@400;700&display=swap">
+<style>
+/* Layout: a sober law-firm client portal. Letterhead band, a login card, then the case file on paper. */
+:root{
+  --bg:#f3f1ec;--panel:#ffffff;--ink:#1e2430;--muted:#6b7280;--line:#dcd8cf;
+  --navy:#1f2f4a;--gold:#9a7b3c;--paper:#fbf8f0;--seal:#8f2a24;--ok:#2f6b46;
+  --ui:"Vazirmatn",Tahoma,sans-serif;--doc:"Noto Naskh Arabic","Vazirmatn",serif;--hand:"Aref Ruqaa","Noto Naskh Arabic",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151821;--panel:#1d212c;--ink:#e7e4dc;--muted:#9aa0ab;--line:#2f3443;--navy:#c9b27a;--gold:#c9b27a;--paper:#efe9da;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151821;--panel:#1d212c;--ink:#e7e4dc;--muted:#9aa0ab;--line:#2f3443;--navy:#c9b27a;--gold:#c9b27a;--paper:#efe9da;color-scheme:dark}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+body{font-family:var(--ui);font-size:16px;line-height:1.8}
+.top{border-bottom:3px double var(--gold);background:var(--panel)}
+.top .in,.main{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top .in{padding-block:18px;display:flex;align-items:center;gap:14px}
+.mark{width:46px;height:46px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--doc);font-weight:700;font-size:22px;color:var(--navy);flex:none}
+.top h1{margin:0;font-family:var(--doc);font-size:22px;color:var(--navy);line-height:1.4}
+.top p{margin:0;font-size:13px;color:var(--muted)}
+.main{padding-block:26px 60px;display:flex;flex-direction:column;gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.card h2{margin:0;font-size:18px}
+label{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--muted)}
+input{font-family:var(--ui);font-size:17px;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+input:focus{outline:2px solid var(--gold);outline-offset:1px}
+button{font-family:var(--ui);font-size:16px;background:var(--navy);color:var(--panel);border:0;border-radius:4px;padding:11px 18px;cursor:pointer}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button:disabled{opacity:.5;cursor:not-allowed}
+.err{color:var(--seal);font-size:14px;min-height:1.4em;margin:0}
+.note{font-size:13px;color:var(--muted);margin:0}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px}
+.meta dt{color:var(--muted)}
+.meta dd{margin:0;font-weight:600}
+.num{direction:ltr;unicode-bidi:isolate;white-space:nowrap;font-variant-numeric:tabular-nums}
+.paper{background:var(--paper);color:#2b2620;border:1px solid #d9d0bb;padding:22px 20px;font-family:var(--doc);line-height:2.1;display:flex;flex-direction:column;gap:10px;position:relative}
+.paper .hd{font-family:var(--ui);font-weight:800;font-size:15px;text-align:center}
+.paper .hand{font-family:var(--hand);font-size:19px;line-height:2;color:#1f2f5c}
+.stamp{align-self:flex-start;border:2px solid var(--seal);color:var(--seal);font-family:var(--ui);font-weight:800;font-size:12px;padding:2px 10px;transform:rotate(-4deg)}
+.sig{align-self:flex-end;font-family:var(--hand);font-size:22px;color:#1f2f5c}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:right;vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600}
+.out{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);font-size:13px;padding:6px 12px}
+footer{font-size:12px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <div class="mark" aria-hidden="true">م</div>
+  <div><h1>دفتر وکالت مستوفی</h1><p>دکتر جمشید مستوفی · وکیل پایه یک دادگستری · از ۱۹۸۲</p></div>
+</div></header>
+
+<main class="main">
+  <section class="card" id="login">
+    <h2>سامانه پیگیری پرونده موکلین</h2>
+    <p class="note">برای مشاهده وضعیت پرونده، شماره پرونده و نام خانوادگی موکل را وارد کنید.</p>
+    <form id="f" novalidate>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <label for="case">شماره پرونده<input id="case" autocomplete="off" placeholder="مثلاً ۴۲/۲۰۱۸" inputmode="text"></label>
+        <label for="client">نام و نام خانوادگی موکل<input id="client" autocomplete="off"></label>
+        <button type="submit" id="go">مشاهده پرونده</button>
+        <p class="err" id="err" aria-live="polite"></p>
+      </div>
+    </form>
+  </section>
+
+  <section id="file" hidden style="display:flex;flex-direction:column;gap:20px">
+    <div class="card">
+      <div class="out"><h2>پرونده <span class="num">17/1993</span></h2><button type="button" class="ghost" id="out">خروج</button></div>
+      <dl class="meta">
+        <dt>موکل</dt><dd>بهرام صدری</dd>
+        <dt>موضوع</dt><dd>وصیت‌نامه دوم و پاکت مهر و موم پیوست</dd>
+        <dt>تاریخ تشکیل</dt><dd>۲۸ فوریه ۱۹۹۳</dd>
+        <dt>وضعیت</dt><dd>مختومه · اصل سند تحویل شده</dd>
+      </dl>
+    </div>
+
+    <div class="paper">
+      <span class="stamp">رونوشت</span>
+      <p class="hd">وصیت‌نامه</p>
+      <p class="hand">اینجانب بهرام صدری، در کمال سلامت عقل و به اختیار خود، این وصیت‌نامه را می‌نویسم و هر وصیت‌نامه پیش از این را تا جایی که با این متن مغایر است باطل می‌دانم.</p>
+      <p class="hand">نیمی از سهم من در گروه صدری به پسرم شهاب، متولد ۱۲ ژوئیه ۱۹۹۱، می‌رسد.</p>
+      <p class="hand">نیم دیگر به کسی می‌رسد که نامش در پاکت مهر و موم پیوست این وصیت‌نامه آمده است. این پاکت فقط پس از مرگ من، و فقط به دست وکیلم یا وارث رسمی‌ام، باز شود.</p>
+      <p class="hand">از پسرم می‌خواهم آنچه را در آن پاکت می‌خواند با آرامش بپذیرد. من سال‌ها جرئت گفتنش را نداشتم.</p>
+      <p class="sig">ب. صدری · ۳ آوریل ۱۹۹۳</p>
+    </div>
+
+    <div class="card">
+      <h2>سوابق پرونده</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>تاریخ</th><th>رویداد</th></tr></thead>
+        <tbody>
+          <tr><td class="num">28-02-1993</td><td>تشکیل پرونده. مراجعه‌کننده: خانم ف. رادمنش، از طرف موکل.</td></tr>
+          <tr><td class="num">03-04-1993</td><td>امضای وصیت‌نامه در حضور وکیل. پاکت پیوست مهر و موم و بایگانی شد.</td></tr>
+          <tr><td class="num">16-10-2025</td><td>اطلاع از فوت موکل.</td></tr>
+          <tr><td class="num">21-10-2025</td><td>تماس آقای شهاب صدری از تلفن منزل: <span class="num">02 648 31 09</span>. درخواست تحویل پرونده. پیام آماده بودن روی پیغام‌گیر همان خط گذاشته شد.</td></tr>
+          <tr><td class="num">22-10-2025</td><td>تحویل اصل وصیت‌نامه و پاکت پیوست به آقای شهاب صدری. پاکت هنگام تحویل باز نشده بود. نسخه دومی در دفتر نماند.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">محتوای پاکت پیوست در سوابق این دفتر ثبت نشده است.</p>
+    </div>
+  </section>
+
+  <footer>دفتر وکالت مستوفی · خیابان باغ‌شاه، پلاک ۴۰ · این سامانه فقط برای موکلین است.</footer>
+</main>
+
+<script>
+(function(){
+  function norm(s){
+    var fa='۰۱۲۳۴۵۶۷۸۹',ar='٠١٢٣٤٥٦٧٨٩';
+    return (s||'').replace(/[۰-۹]/g,function(d){return fa.indexOf(d)}).replace(/[٠-٩]/g,function(d){return ar.indexOf(d)})
+      .replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\s‌\-\.\/\\_]/g,'').toLowerCase();
+  }
+  var f=document.getElementById('f'),err=document.getElementById('err'),go=document.getElementById('go');
+  var K='sadri-lawyer-open';
+  function show(open){document.getElementById('login').hidden=open;document.getElementById('file').hidden=!open;}
+  try{if(localStorage.getItem(K)==='1')show(true)}catch(e){}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var c=norm(document.getElementById('case').value),n=norm(document.getElementById('client').value);
+    var caseOk=(c==='171993'),nameOk=(n.indexOf('صدری')>-1);
+    if(caseOk&&nameOk){try{localStorage.setItem(K,'1')}catch(x){}show(true);window.scrollTo(0,0);return}
+    err.textContent=caseOk?'نام موکل با این پرونده مطابقت ندارد.':'پرونده‌ای با این مشخصات یافت نشد.';
+    go.disabled=true;setTimeout(function(){go.disabled=false},4000);
+  });
+  document.getElementById('out').addEventListener('click',function(){try{localStorage.removeItem(K)}catch(e){}show(false);f.reset();err.textContent='';});
+})();
+</script>
+</body>
+</html>
