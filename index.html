@@ -124,11 +124,11 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
   function norm(s){
     var fa='۰۱۲۳۴۵۶۷۸۹',ar='٠١٢٣٤٥٦٧٨٩';
     return (s||'').replace(/[۰-۹]/g,function(d){return fa.indexOf(d)}).replace(/[٠-٩]/g,function(d){return ar.indexOf(d)})
-      .replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\s‌\-\.\/\\•·_+,:]/g,'').toLowerCase();
+      .replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\s‌\-\.\/\\•·_+,:،]/g,'').toLowerCase();
   }
   var S={found:[],hints:{}};
-  try{var raw=JSON.parse(localStorage.getItem('sadri-v7')||'null');if(raw&&raw.found)S=raw}catch(e){}
-  function save(){try{localStorage.setItem('sadri-v7',JSON.stringify(S))}catch(e){}}
+  try{var raw=JSON.parse(localStorage.getItem('sadri-v8')||'null');if(raw&&raw.found)S=raw}catch(e){}
+  function save(){try{localStorage.setItem('sadri-v8',JSON.stringify(S))}catch(e){}}
 
   function order(code,label,extra){return '<div class="order"><b>پاکت «'+code+'» را باز کنید.</b><span>'+label+'</span>'+(extra?'<span>'+extra+'</span>':'')+'</div>'}
 
@@ -144,40 +144,40 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       '<p><b>یافته ۶.</b> دفاتر سال‌های ۲۰۲۳ تا ۲۰۲۵ در ۲۰ اکتبر ۲۰۲۵ ویرایش شده‌اند، شش روز بعد از فوت مدیرعامل. نام ویرایش‌کننده ثبت نشده.</p>'+
       '<p><b>یافته ۷.</b> یک روز بعد، انتقال <span class="num">TR-882</span> به مبلغ ۸۵٬۰۰۰ یورو به حساب شخصی <span class="num">••5521</span> با عنوان «خرید تجهیزات IT» انجام شده. برخلاف یافته ۴، هیچ فاکتوری وجود ندارد. تأییدکننده: ش. صدری.</p>'+
       '<p><b>توصیه.</b> سوابق دسترسی به حساب‌ها بازبینی شود و با کارکنان سابقی که حق امضا داشته‌اند تماس گرفته شود. پرونده‌های کاغذی کارکنان سابق ضمیمه این گزارش است.</p></div>'+
-      order('کارکنان سابق','پرونده‌های کاغذی کارکنان سابق گروه صدری')},
+      '<div class="doc"><span class="meta">ضمیمه گزارش:</span><p>پرونده‌های کاغذی ۲۰ کارمند سابق، که حالا روی میز شماست. پرونده دیجیتال هر کارمند با شماره چهاررقمی یا نام کاملش قابل جستجوست.</p></div>'},
     acc5521:{keys:['5521'],tag:'ACC ••5521',title:'حساب <span class="num">••5521</span>',html:'<div class="doc"><p>حساب شخصی، باز شده در ۲۰۱۴.</p><p>نام صاحب حساب به دلیل حریم خصوصی بانکی نمایش داده نمی‌شود. شاید جای دیگری این شماره را دیده باشید.</p></div>'},
-    tr882:{keys:['tr882','882'],tag:'TR-882',title:'انتقال TR-882',html:'<div class="doc"><p>۲۱ اکتبر ۲۰۲۵. مبلغ ۸۵٬۰۰۰ یورو. شرح: خرید تجهیزات IT. مقصد: حساب شخصی ••۵۵۲۱. تأییدکننده: ش. صدری.</p><p>پیوست: فاکتوری وجود ندارد.</p></div>'},
-    e0102:{keys:['0102','102','بهمنطاهری','بهمن','طاهری'],tag:'HR 0102',title:'پرونده پرسنلی <span class="num">0102</span>',html:'<div class="doc"><p><b>بهمن طاهری</b>، مدیر فنی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0215:{keys:['0215','215','منیژهصدیقی','منیژه','صدیقی'],tag:'HR 0215',title:'پرونده پرسنلی <span class="num">0215</span>',html:'<div class="doc"><p><b>منیژه صدیقی</b>، حسابدار ارشد.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0388:{keys:['0388','388','داوودفرهمند','داوود','فرهمند'],tag:'HR 0388',title:'پرونده پرسنلی <span class="num">0388</span>',html:'<div class="doc"><p><b>داوود فرهمند</b>، مدیر مالی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0412:{keys:['0412','412','فرانکرادمنش','فرانک','رادمنش'],tag:'HR 0412',title:'پرونده پرسنلی <span class="num">0412</span>',html:'<div class="doc"><p><b>فرانک رادمنش</b>، دستیار شخصی مدیرعامل، <span class="num">1988–1993</span>. حق امضا: دارد. پاراف: ف.ر.</p><p>علت خروج: استعفای ناگهانی، ۱ آوریل ۱۹۹۳، بدون اطلاع قبلی.</p><p>وسایل جامانده ایشان از روی میز کارش جمع شد و در صندوق پرسنلی بایگانی شد. تا امروز کسی برای تحویل گرفتنشان نیامده.</p></div>'+order('۰۴۱۲','صندوق پرسنلی فرانک رادمنش')},
-    e0420:{keys:['0420','420','رضامقدم','رضا','مقدم'],tag:'HR 0420',title:'پرونده پرسنلی <span class="num">0420</span>',html:'<div class="doc"><p><b>رضا مقدم</b>، راننده مدیرعامل.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0457:{keys:['0457','457','سیماکاظمی','سیما','کاظمی'],tag:'HR 0457',title:'پرونده پرسنلی <span class="num">0457</span>',html:'<div class="doc"><p><b>سیما کاظمی</b>، دستیار شخصی مدیرعامل.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0533:{keys:['0533','533','فرهادرستمی','فرهاد','رستمی'],tag:'HR 0533',title:'پرونده پرسنلی <span class="num">0533</span>',html:'<div class="doc"><p><b>فرهاد رستمی</b>، انباردار.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0598:{keys:['0598','598','لادننیکو','لادن','نیکو'],tag:'HR 0598',title:'پرونده پرسنلی <span class="num">0598</span>',html:'<div class="doc"><p><b>لادن نیکو</b>، منشی پذیرش.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0640:{keys:['0640','640','کامرانیزدی','کامران','یزدی'],tag:'HR 0640',title:'پرونده پرسنلی <span class="num">0640</span>',html:'<div class="doc"><p><b>کامران یزدی</b>، مدیر فروش.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0702:{keys:['0702','702','پرستوامینی','پرستو','امینی'],tag:'HR 0702',title:'پرونده پرسنلی <span class="num">0702</span>',html:'<div class="doc"><p><b>پرستو امینی</b>، کارشناس منابع انسانی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0731:{keys:['0731','731','نویدصالحی','نوید','صالحی'],tag:'HR 0731',title:'پرونده پرسنلی <span class="num">0731</span>',html:'<div class="doc"><p><b>نوید صالحی</b>، کارشناس IT.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0817:{keys:['0817','817','فریبارحمانی','فریبا','رحمانی'],tag:'HR 0817',title:'پرونده پرسنلی <span class="num">0817</span>',html:'<div class="doc"><p><b>فریبا رحمانی</b>، حسابدار.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0855:{keys:['0855','855','سهرابقاسمی','سهراب','قاسمی'],tag:'HR 0855',title:'پرونده پرسنلی <span class="num">0855</span>',html:'<div class="doc"><p><b>سهراب قاسمی</b>، نگهبان دفتر مرکزی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0903:{keys:['0903','903','میناجلالی','مینا','جلالی'],tag:'HR 0903',title:'پرونده پرسنلی <span class="num">0903</span>',html:'<div class="doc"><p><b>مینا جلالی</b>، کارشناس حقوقی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0946:{keys:['0946','946','آرشکیانی','آرش','کیانی'],tag:'HR 0946',title:'پرونده پرسنلی <span class="num">0946</span>',html:'<div class="doc"><p><b>آرش کیانی</b>، کارشناس مالی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e0988:{keys:['0988','988','نسترنبهرامی','نسترن','بهرامی'],tag:'HR 0988',title:'پرونده پرسنلی <span class="num">0988</span>',html:'<div class="doc"><p><b>نسترن بهرامی</b>، دستیار مدیرعامل.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e1028:{keys:['1028','1028','الهامشریفی','الهام','شریفی'],tag:'HR 1028',title:'پرونده پرسنلی <span class="num">1028</span>',html:'<div class="doc"><p><b>الهام شریفی</b>، کارمند دفتری.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e1066:{keys:['1066','1066','بابکنوری','بابک','نوری'],tag:'HR 1066',title:'پرونده پرسنلی <span class="num">1066</span>',html:'<div class="doc"><p><b>بابک نوری</b>، راننده.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e1102:{keys:['1102','1102','ژالهفتحی','ژاله','فتحی'],tag:'HR 1102',title:'پرونده پرسنلی <span class="num">1102</span>',html:'<div class="doc"><p><b>ژاله فتحی</b>، منشی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    e1140:{keys:['1140','1140','امیدسلطانی','امید','سلطانی'],tag:'HR 1140',title:'پرونده پرسنلی <span class="num">1140</span>',html:'<div class="doc"><p><b>امید سلطانی</b>، کارآموز مالی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
-    lawyer:{keys:['171993','w171993'],tag:'LAW 17/1993',title:'پرونده حقوقی ۱۷/۱۹۹۳',html:
+    tr882:{keys:['tr882'],tag:'TR-882',title:'انتقال TR-882',html:'<div class="doc"><p>۲۱ اکتبر ۲۰۲۵. مبلغ ۸۵٬۰۰۰ یورو. شرح: خرید تجهیزات IT. مقصد: حساب شخصی ••۵۵۲۱. تأییدکننده: ش. صدری.</p><p>پیوست: فاکتوری وجود ندارد.</p></div>'},
+    e0102:{keys:['0102','بهمنطاهری'],tag:'HR 0102',title:'پرونده پرسنلی <span class="num">0102</span>',html:'<div class="doc"><p><b>بهمن طاهری</b>، مدیر فنی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0215:{keys:['0215','منیژهصدیقی'],tag:'HR 0215',title:'پرونده پرسنلی <span class="num">0215</span>',html:'<div class="doc"><p><b>منیژه صدیقی</b>، حسابدار ارشد.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0388:{keys:['0388','داوودفرهمند'],tag:'HR 0388',title:'پرونده پرسنلی <span class="num">0388</span>',html:'<div class="doc"><p><b>داوود فرهمند</b>، مدیر مالی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0412:{keys:['0412','فرانکرادمنش'],tag:'HR 0412',title:'پرونده پرسنلی <span class="num">0412</span>',html:'<div class="doc"><p><b>فرانک رادمنش</b>، دستیار شخصی مدیرعامل، <span class="num">1988–1993</span>. حق امضا: دارد. پاراف: ف.ر.</p><p>علت خروج: استعفای ناگهانی، ۱ آوریل ۱۹۹۳، بدون اطلاع قبلی.</p><p>وسایل جامانده ایشان از روی میز کارش جمع شد و در یک صندوق پرسنلی بایگانی شد. تا امروز کسی برای تحویل گرفتنشان نیامده.</p><p>محل نگهداری فعلی صندوق: منزل مدیرعامل، آشپزخانه، <b>زیر جزیره</b>.</p></div>'+order('۰۴۱۲','صندوق پرسنلی فرانک رادمنش · زیر جزیره آشپزخانه')},
+    e0420:{keys:['0420','رضامقدم'],tag:'HR 0420',title:'پرونده پرسنلی <span class="num">0420</span>',html:'<div class="doc"><p><b>رضا مقدم</b>، راننده مدیرعامل.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0457:{keys:['0457','سیماکاظمی'],tag:'HR 0457',title:'پرونده پرسنلی <span class="num">0457</span>',html:'<div class="doc"><p><b>سیما کاظمی</b>، دستیار شخصی مدیرعامل.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0533:{keys:['0533','فرهادرستمی'],tag:'HR 0533',title:'پرونده پرسنلی <span class="num">0533</span>',html:'<div class="doc"><p><b>فرهاد رستمی</b>، انباردار.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0598:{keys:['0598','لادننیکو'],tag:'HR 0598',title:'پرونده پرسنلی <span class="num">0598</span>',html:'<div class="doc"><p><b>لادن نیکو</b>، منشی پذیرش.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0640:{keys:['0640','کامرانیزدی'],tag:'HR 0640',title:'پرونده پرسنلی <span class="num">0640</span>',html:'<div class="doc"><p><b>کامران یزدی</b>، مدیر فروش.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0702:{keys:['0702','پرستوامینی'],tag:'HR 0702',title:'پرونده پرسنلی <span class="num">0702</span>',html:'<div class="doc"><p><b>پرستو امینی</b>، کارشناس منابع انسانی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0731:{keys:['0731','نویدصالحی'],tag:'HR 0731',title:'پرونده پرسنلی <span class="num">0731</span>',html:'<div class="doc"><p><b>نوید صالحی</b>، کارشناس IT.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0817:{keys:['0817','فریبارحمانی'],tag:'HR 0817',title:'پرونده پرسنلی <span class="num">0817</span>',html:'<div class="doc"><p><b>فریبا رحمانی</b>، حسابدار.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0855:{keys:['0855','سهرابقاسمی'],tag:'HR 0855',title:'پرونده پرسنلی <span class="num">0855</span>',html:'<div class="doc"><p><b>سهراب قاسمی</b>، نگهبان دفتر مرکزی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0903:{keys:['0903','میناجلالی'],tag:'HR 0903',title:'پرونده پرسنلی <span class="num">0903</span>',html:'<div class="doc"><p><b>مینا جلالی</b>، کارشناس حقوقی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0946:{keys:['0946','آرشکیانی'],tag:'HR 0946',title:'پرونده پرسنلی <span class="num">0946</span>',html:'<div class="doc"><p><b>آرش کیانی</b>، کارشناس مالی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e0988:{keys:['0988','نسترنبهرامی'],tag:'HR 0988',title:'پرونده پرسنلی <span class="num">0988</span>',html:'<div class="doc"><p><b>نسترن بهرامی</b>، دستیار مدیرعامل.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e1028:{keys:['1028','الهامشریفی'],tag:'HR 1028',title:'پرونده پرسنلی <span class="num">1028</span>',html:'<div class="doc"><p><b>الهام شریفی</b>، کارمند دفتری.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e1066:{keys:['1066','بابکنوری'],tag:'HR 1066',title:'پرونده پرسنلی <span class="num">1066</span>',html:'<div class="doc"><p><b>بابک نوری</b>، راننده.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e1102:{keys:['1102','ژالهفتحی'],tag:'HR 1102',title:'پرونده پرسنلی <span class="num">1102</span>',html:'<div class="doc"><p><b>ژاله فتحی</b>، منشی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    e1140:{keys:['1140','امیدسلطانی'],tag:'HR 1140',title:'پرونده پرسنلی <span class="num">1140</span>',html:'<div class="doc"><p><b>امید سلطانی</b>، کارآموز مالی.</p><p>از این پرونده فقط نسخه کاغذی موجود است.</p></div>'},
+    lawyer:{keys:['171993'],tag:'LAW 17/1993',title:'پرونده حقوقی ۱۷/۱۹۹۳',html:
       '<div class="doc"><p>این شماره پرونده در بایگانی گروه صدری ثبت نشده است.</p><p>پرونده‌های حقوقی شخصی مدیرعامل نزد وکیل خانوادگی‌اش نگهداری می‌شوند و فقط از طریق دفتر وکالت قابل پیگیری‌اند.</p></div>'},
-    phone:{keys:['026483109','6483109','3226483109'],tag:'TEL 02 648 31 09',title:'خط ثابت منزل صدری',html:
+    phone:{keys:['026483109','3226483109'],tag:'TEL 02 648 31 09',title:'خط ثابت منزل صدری',html:
       '<div class="doc"><p>خط ثابت منزل. مشترک: بهرام صدری. نشانی: خیابان اقاقیا، پلاک ۱۸ (ملک گروه صدری).</p><p>این خط به یک دستگاه پیغام‌گیر وصل است. پیام‌ها روی خود دستگاه ذخیره می‌شوند و در بایگانی شرکت نیستند.</p><p>دسترسی از راه دور به پیغام‌گیر: چهار رقم آخر همین شماره.</p></div>'},
-    house:{keys:['اقاقیا','اقاقیا18','خیاباناقاقیا','خیاباناقاقیا18','اقاقیاپلاک18','خیاباناقاقیاپلاک18'],tag:'PROP ACACIA 18',title:'پرونده ملک: خیابان اقاقیا، پلاک ۱۸',html:
+    house:{keys:['اقاقیا18','خیاباناقاقیا18','اقاقیاپلاک18','خیاباناقاقیاپلاک18'],tag:'PROP ACACIA 18',title:'پرونده ملک: خیابان اقاقیا، پلاک ۱۸',html:
       '<div class="doc"><b style="font-family:var(--font-ui)">فهرست اشیای جامانده</b><span class="meta">شرکت نظافت «برق»، ۱ نوامبر ۲۰۲۵، صبح روز بعد از مهمانی. هر شیء شماره دارد.</span>'+
       '<div class="tbl"><table><thead><tr><th>شماره</th><th>شیء</th><th>محل</th></tr></thead><tbody>'+
       '<tr><td class="num">03</td><td>جاروی تزئینی جادوگر</td><td>ورودی</td></tr>'+
       '<tr><td class="num">09</td><td>تندیس شیشه‌ای، لبه شکسته</td><td>اتاق مطالعه، کف</td></tr>'+
       '<tr><td class="num">11</td><td>لیوان با ته سیگار</td><td>حیاط، کنار چراغ</td></tr>'+
-      '<tr><td class="num">14</td><td>پوشه مقوایی</td><td>زیر میز اتاق مطالعه</td></tr>'+
+      '<tr><td class="num">14</td><td>پوشه مقوایی</td><td>زیر میز ناهارخوری</td></tr>'+
       '<tr><td class="num">18</td><td>دوربین عکاسی یک‌بارمصرف، فیلم تمام‌شده</td><td>کنار ظرف پانچ</td></tr>'+
       '<tr><td class="num">22</td><td>دستکش سفید با لکه قرمز</td><td>روشویی</td></tr>'+
       '<tr><td class="num">27</td><td>جعبه چوبی قفل‌دار</td><td>انباری آشپزخانه، پشت کیسه برنج</td></tr>'+
@@ -185,10 +185,10 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       '<span class="meta">شماره هر شیء را جستجو کنید.</span></div>'+
       '<div class="doc"><b style="font-family:var(--font-ui)">سیستم دوربین منزل</b><p>هشت دوربین. فیلم‌های ۳۱ اکتبر در <b>۱ نوامبر ساعت ۰۲:۱۰</b> از دستگاه پاک شده‌اند. کاربر: <span class="num">shahab.s</span></p><p>نسخه پشتیبان ابری هنوز هست، ولی فقط با رمز مالک قبلی، بهرام صدری، باز می‌شود. رمز چهار رقم است.</p></div>'+
       '<form class="code" data-lock="cams"><input type="text" inputmode="numeric" autocomplete="off" placeholder="رمز مالک قبلی" aria-label="رمز دوربین‌ها" id="in-cams"><button type="submit">باز کن</button></form><p class="msg" aria-live="polite"></p>'},
-    i03:{keys:['03','3'],tag:'ITEM 03',title:'شیء ۰۳',html:'<div class="doc"><p>جاروی تزئینی جادوگر. چیزی به آن نچسبیده. فقط تزئینات است.</p></div>'},
-    i09:{keys:['09','9'],tag:'ITEM 09',title:'شیء ۰۹: تندیس شیشه‌ای',html:'<div class="doc"><p>تندیس شیشه‌ای سنگین، جایزه «بهترین سرمایه‌گذار سال ۱۹۹۹». لبه‌اش شکسته. روی شکستگی لکه قهوه‌ای خشک‌شده هست. شرکت نظافت فکر کرده شراب است.</p></div>'},
+    i03:{keys:['03'],tag:'ITEM 03',title:'شیء ۰۳',html:'<div class="doc"><p>جاروی تزئینی جادوگر. چیزی به آن نچسبیده. فقط تزئینات است.</p></div>'},
+    i09:{keys:['09'],tag:'ITEM 09',title:'شیء ۰۹: تندیس شیشه‌ای',html:'<div class="doc"><p>تندیس شیشه‌ای سنگین، جایزه «بهترین سرمایه‌گذار سال ۱۹۹۹». لبه‌اش شکسته. روی شکستگی لکه قهوه‌ای خشک‌شده هست. شرکت نظافت فکر کرده شراب است.</p></div>'},
     i11:{keys:['11'],tag:'ITEM 11',title:'شیء ۱۱: لیوان حیاط',html:'<div class="doc"><p>لیوان نیمه‌پر با سه ته سیگار، کنار چراغ حیاط. یکی از ته سیگارها مارک خاصی است که فقط شهاب می‌کشد.</p></div>'},
-    i14:{keys:['14'],tag:'ITEM 14',title:'شیء ۱۴: پوشه زیر میز',html:'<div class="doc"><p>پوشه مقوایی، کمی مچاله، زیر میز اتاق مطالعه. شرکت نظافت آن را دست‌نخورده تحویل داده.</p></div>'+order('۱۴','پوشه زیر میز اتاق مطالعه')},
+    i14:{keys:['14'],tag:'ITEM 14',title:'شیء ۱۴: پوشه زیر میز',html:'<div class="doc"><p>پوشه مقوایی، کمی مچاله. نظافتچی آن را زیر میز ناهارخوری پیدا کرد و دست‌نخورده همان‌جا گذاشت، با برچسب شماره ۱۴.</p></div>'+order('۱۴','پوشه زیر میز ناهارخوری')},
     i18:{keys:['18'],tag:'ITEM 18',title:'شیء ۱۸: دوربین یک‌بارمصرف',html:
       '<div class="doc"><p>دوربین یک‌بارمصرف، فیلمش تمام شده. شرکت نظافت آن را برای ظهور به «عکاسی آفتاب» داد. ۹ عکس از ۲۷ عکس قابل استفاده بود.</p></div>'+
       '<div class="gallery">'+
@@ -216,12 +216,12 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       '<p class="n">[صدای ضربه. چیزی شیشه‌ای می‌شکند. سکوت. موسیقی]</p>'+
       '<p class="h">REC 23:25:31</p><p class="n">صدای ۳، آهسته: ...نه. نه، نه، نه. این که...</p></div>'},
     cams:{keys:[],tag:'CCTV 31-10',title:'نسخه پشتیبان دوربین‌ها، شب ۳۱ اکتبر',html:'<p class="muted">هشت فایل. فقط سایه‌ها و ساعت‌ها. ساعت‌ها را کنار هم بگذارید.</p><div class="clips" id="clips"></div>'},
-    mother:{keys:['0471629014','471629014','32471629014'],tag:'TEL 0471 62 90 14',title:'آگهی‌های مفقودی',html:
-      '<p class="muted">این شماره در ده‌ها آگهی کاغذی و آنلاین تکرار شده است.</p>'+
+    mother:{keys:['شهراممرادی'],tag:'MISSING · 2025-1187',title:'پرونده مفقودی: شهرام مرادی',html:
+      '<p class="muted">این نام در یک پرونده عمومی پلیس و ده‌ها آگهی کاغذی و آنلاین تکرار شده است.</p>'+
       '<div class="doc"><span class="stamp">گمشده</span><p style="font-size:24px;font-family:var(--font-ui);font-weight:800">شهرام مرادی</p>'+
       '<p>متولد ۴ مارس ۱۹۹۲. قد حدود ۱۸۰، موی تیره. آخرین بار شب ۳۱ اکتبر ۲۰۲۵ دیده شده، با لباس هالووین: شنل سیاه و ماسک سفید.</p>'+
-      '<p>به مادرش گفته بود به مهمانی‌ای در خیابان اقاقیا می‌رود تا «حقش را بگیرد».</p>'+
-      '<p>هر خبری دارید به مادرش، <b>لیلا مرادی</b>، زنگ بزنید: <span class="num">0471 62 90 14</span></p>'+
+      '<p>به مادرش گفته بود به مهمانی‌ای در خیابان اقاقیا می‌رود تا «حقش را بگیرد» و برمی‌گردد. ساعت ۲۳:۵۰ آخرین پیام مادرش را دید و جواب نداد.</p>'+
+      '<p>گزارش‌دهنده: مادرش، <b>لیلا مرادی</b>.</p>'+
       '<span class="meta">در عکس آگهی، شهرام به طرز عجیبی شبیه شهاب صدری است.</span></div>'+
       '<p class="muted">پرونده آخر باز شد. پایین صفحه.</p>'}
   };
@@ -230,10 +230,10 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
   var HINTS=[
     ['شماره حسابی که هر ماه پول می‌گرفت، در صورت‌حساب ناقص است.','پشت عکس سوخته را نگاه کنید. دو رقم آنجاست.','دو رقم پشت عکس، بعد دو رقم آخر حساب. جستجو کنید: ۸۳۴۷'],
     ['یافته ۵ می‌گوید چه کسی می‌توانست دستور پرداخت را ثبت کند. پاراف «ف.ر.» حروف اول یک اسم است. پرونده‌های کاغذی کارکنان را نگاه کنید.','سه نفر با حروف «ف.ر.» هستند. فقط یکی حق امضا داشت و در سال ۱۹۹۲ دستیار شخصی مدیرعامل بود. پرونده‌اش می‌گوید بقیه‌اش در بایگانی دیجیتال است.','جستجو کنید: ۰۴۱۲ یا فرانک رادمنش'],
-    ['صندوق فرانک را کامل بگردید. دفتر خاطرات از یک وکیل و یک شماره پرونده حرف می‌زند، و چیز دیگری هم در صندوق هست.','کارت ویزیت دفتر وکالت مستوفی پشتش QR دارد. شماره پرونده از دفتر خاطرات، نام موکل از روزنامه. بعد: پرونده وکیل یک شماره تلفن دارد و در این خانه دستگاهی هست که از اول جلوی چشمتان بوده.','پرونده ۱۷/۱۹۹۳، موکل بهرام صدری. کد پیغام‌گیر ۳۱۰۹. پیام آخر شرکت نظافت می‌گوید فهرست اشیا زیر پرونده ملک در همین بایگانی است. آدرس ملک در روزنامه است. جستجو کنید: اقاقیا ۱۸'],
+    ['دفتر خاطرات فرانک از یک وکیل و یک شماره پرونده حرف می‌زند. روی میز چیزی از همان وکیل هست.','کارت ویزیت دفتر وکالت مستوفی پشتش QR دارد. شماره پرونده از دفتر خاطرات، نام موکل از روزنامه. بعد: پرونده وکیل یک شماره تلفن دارد و در این خانه دستگاهی هست که از اول جلوی چشمتان بوده.','پرونده ۱۷/۱۹۹۳، موکل بهرام صدری. کد پیغام‌گیر ۳۱۰۹. پیام آخر شرکت نظافت می‌گوید فهرست اشیا زیر پرونده ملک در همین بایگانی است. آدرس ملک در روزنامه است. جستجو کنید: اقاقیا ۱۸'],
     ['فهرست اشیای جامانده را بخوانید. هر شیء شماره دارد و قابل جستجوست.','پوشه کجا جا ماند؟ کسی آن شب عکس می‌گرفت؟','جستجو کنید: ۱۴ و ۱۸'],
     ['دوربین‌ها رمز مالک قبلی را می‌خواهند. فرانک درباره رمزهای آقا چیزی نوشته بود.','رمزها «روزی که زندگی آقا عوض شد» بود، روز و ماه. دفتر خاطرات می‌گوید آن روز کی بود.','ورودی ۵ مارس می‌گوید «دیروز». پس ۴ مارس. رمز: ۰۴۰۳'],
-    ['فیلم آشپزخانه را ببینید. آن جعبه حالا کجاست؟ فهرست اشیا را دوباره بخوانید.','روی جعبه «ش ♥» خراشیده‌اند. وصیت‌نامه تاریخ تولد یک «ش» را دارد.','رمز جعبه: ۱۲۰۷. کلید داخل جعبه پاکت «پایین» را باز می‌کند. روی گوشی شکسته یک شماره هست. جستجویش کنید.'],
+    ['فیلم آشپزخانه را ببینید. آن جعبه حالا کجاست؟ فهرست اشیا را دوباره بخوانید.','روی جعبه «ش ♥» خراشیده‌اند. وصیت‌نامه تاریخ تولد یک «ش» را دارد.','رمز جعبه: ۱۲۰۷. کلید داخل جعبه پاکت «پایین» را باز می‌کند. داخل کیف پول یک کارت شناسایی هست. نام کامل صاحبش را جستجو کنید.'],
     []
   ];
   function stage(){var f=S.found;var has=function(k){return f.indexOf(k)>-1};
@@ -256,25 +256,28 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
   function findRecord(q){
     var n=norm(q);if(!n)return null;
     for(var id in R){if(R[id].keys.indexOf(n)>-1)return id}
-    if(n.indexOf('اقاقیا')>-1)return 'house';
     return null;
   }
-  var lastNew=null;
+  var lastNew=S.last||null;
   document.getElementById('search').addEventListener('submit',function(e){
     e.preventDefault();var inp=document.getElementById('q'),msg=document.getElementById('smsg');
     var id=findRecord(inp.value);
     if(!id){msg.className='msg bad';msg.textContent='رکوردی پیدا نشد.';return}
     if(R[id].needs&&S.found.indexOf(R[id].needs)<0){msg.className='msg bad';msg.textContent='این پرونده قفل است. کارت حافظه فقط با رمز سیستم خانه باز می‌شود.';return}
     msg.className='msg good';
-    if(S.found.indexOf(id)>-1){msg.textContent='این پرونده قبلاً باز شده. پایین‌تر است.'}
+    if(S.found.indexOf(id)>-1){msg.textContent='این پرونده قبلاً باز شده بود.'}
     else{S.found.push(id);save();msg.textContent='پرونده باز شد.'}
-    lastNew=id;inp.value='';render();
+    lastNew=id;S.last=id;save();inp.value='';render();window.scrollTo({top:0,behavior:'smooth'});
     var el=document.getElementById('r-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
   });
 
   function render(){
     var box=document.getElementById('records');box.innerHTML='';
-    S.found.slice().reverse().forEach(function(id){
+    var show=[];if(lastNew&&R[lastNew])show.push(lastNew);
+    var camsOpen=S.found.indexOf('cams')>-1;
+    if(lastNew==='house'&&camsOpen)show.push('cams');
+    if(lastNew==='cams')show=['house','cams'];
+    show.forEach(function(id){
       var r=R[id];var d=document.createElement('section');d.className='rec'+(id===lastNew?' new':'');d.id='r-'+id;
       d.innerHTML='<div class="rec-head"><h2>'+r.title+'</h2><span class="tag">'+r.tag+'</span></div>'+r.html;
       box.appendChild(d);
@@ -283,11 +286,11 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
     if(lock){
       if(S.found.indexOf('cams')>-1){lock.hidden=true;lock.nextElementSibling.className='msg good';lock.nextElementSibling.textContent='نسخه پشتیبان باز شد.'}
       else lock.addEventListener('submit',function(e){e.preventDefault();var inp=lock.querySelector('input');var v=norm(inp.value);
-        if(v==='0403'||v==='04031992'||v==='4031992'){S.found.push('cams');save();lastNew='cams';render();var el=document.getElementById('r-cams');if(el)el.scrollIntoView({behavior:'smooth'})}
+        if(v==='0403'||v==='04031992'||v==='4031992'){S.found.push('cams');lastNew='cams';S.last='cams';save();render();var el=document.getElementById('r-cams');if(el)el.scrollIntoView({behavior:'smooth'})}
         else cooldown([inp,lock.querySelector('button')],lock.nextElementSibling,15)});
     }
-    if(S.found.indexOf('cams')>-1)buildClips();
-    var fin=S.found.indexOf('mother')>-1;document.getElementById('final').hidden=!fin;if(fin)renderFinal();
+    if(camsOpen&&document.getElementById('clips'))buildClips();
+    var fin=lastNew==='mother'&&S.found.indexOf('mother')>-1;document.getElementById('final').hidden=!fin;if(fin)renderFinal();
     renderHints();
   }
 
