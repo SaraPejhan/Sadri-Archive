@@ -217,7 +217,7 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       '<p class="v1">صدای ۱: حق تو؟ تو که همه چیز را داری!</p>'+
       '<p class="n">[صدای ضربه. چیزی شیشه‌ای می‌شکند. سکوت. موسیقی]</p>'+
       '<p class="h">REC 23:25:31</p><p class="n">صدای ۳، آهسته: ...نه. نه، نه، نه. این که...</p></div></details>'},
-    cams:{keys:[],tag:'CCTV 31-10',title:'نسخه پشتیبان دوربین‌ها، شب ۳۱ اکتبر',html:'<p class="muted">شش فایل. فقط ساعت‌ها و حرکت‌ها. ساعت‌ها را کنار هم بگذارید.</p><div class="clips" id="clips"></div>'},
+    cams:{keys:[],tag:'CCTV 31-10',title:'نسخه پشتیبان دوربین‌ها، شب ۳۱ اکتبر',html:'<p class="muted">هفت فایل. فقط ساعت‌ها و حرکت‌ها. ساعت‌ها را کنار هم بگذارید.</p><div class="clips" id="clips"></div>'},
     mother:{keys:['شهراممرادی'],tag:'MISSING · 2025-1187',title:'پرونده مفقودی: شهرام مرادی',html:
       '<p class="muted">این نام در یک پرونده عمومی پلیس و ده‌ها آگهی کاغذی و آنلاین تکرار شده است.</p>'+
       '<div class="doc"><span class="stamp">گمشده</span><p style="font-size:24px;font-family:var(--font-ui);font-weight:800">شهرام مرادی</p>'+
@@ -327,6 +327,7 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
 
   // ---------- CCTV ----------
   var CLIPS=[
+    {n:1,cam:'CAM 04  DINING',start:[22,40,12],dur:6,bg:'hall',actors:[]},
     {n:2,cam:'CAM 02  HALL',start:[23,4,6],dur:9,bg:'hall',actors:[{c:'cloak',k:[[0,-40,1],[5.5,402,1],[6.6,402,0]]}]},
     {n:3,cam:'CAM 05  GARDEN',start:[23,4,34],dur:8,bg:'garden',actors:[{c:'cloak',k:[[0,250,1],[8,262,1]],smoke:true}]},
     {n:4,cam:'CAM 02  HALL',start:[23,10,1],dur:12,bg:'hall',cut:[6,[23,16,24]],actors:[
@@ -413,6 +414,5 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
   render();
 })();
 </script>
-
 </body>
 </html>
