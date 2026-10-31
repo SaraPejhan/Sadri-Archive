@@ -124,12 +124,12 @@ footer{font-size:12px;color:var(--muted);text-align:center}
   var f=document.getElementById('f'),err=document.getElementById('err'),go=document.getElementById('go');
   var K='sadri-lawyer-open';
   function show(open){document.getElementById('login').hidden=open;document.getElementById('file').hidden=!open;}
-  try{if(localStorage.getItem(K)==='1')show(true)}catch(e){}
+  try{localStorage.removeItem(K)}catch(e){}
   f.addEventListener('submit',function(e){
     e.preventDefault();
     var c=norm(document.getElementById('case').value),n=norm(document.getElementById('client').value);
     var caseOk=(c==='171993'),nameOk=(n==='بهرامصدری');
-    if(caseOk&&nameOk){try{localStorage.setItem(K,'1')}catch(x){}show(true);window.scrollTo(0,0);return}
+    if(caseOk&&nameOk){show(true);window.scrollTo(0,0);return}
     err.textContent=caseOk?'نام موکل با این پرونده مطابقت ندارد.':'پرونده‌ای با این مشخصات یافت نشد.';
     go.disabled=true;setTimeout(function(){go.disabled=false},4000);
   });
