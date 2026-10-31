@@ -90,7 +90,7 @@ body{font-family:var(--ui);font-size:16px;line-height:1.7}
     MSGS.forEach(function(m,i){
       var d=document.createElement('div');d.className='msg';
       d.innerHTML='<div class="top"><span class="when">MSG '+(i+1)+' · '+m[0]+'</span><button type="button" class="tbtn">رونوشت</button></div>';
-      var au=document.createElement('audio');au.controls=true;au.preload='none';au.src='audio/msg'+(i+1)+'.mp3';
+      var au=document.createElement('audio');au.controls=true;au.preload='none';au.src='audio/'+(i+1)+'.mp3';
       var tr=document.createElement('p');tr.className='tr';tr.textContent=m[1];tr.hidden=true;
       au.addEventListener('error',function(){au.remove();tr.hidden=false;d.querySelector('.tbtn').hidden=true});
       d.querySelector('.tbtn').addEventListener('click',function(){tr.hidden=!tr.hidden});
@@ -98,7 +98,7 @@ body{font-family:var(--ui);font-size:16px;line-height:1.7}
       au.addEventListener('play',function(){lcd.innerHTML='<span>PLAY MSG '+(i+1)+'</span><small>'+m[0]+'</small>'});
     });
     // probe once: if no audio files exist, show transcripts directly
-    var probe=new Audio();probe.preload='metadata';probe.src='audio/msg1.mp3';
+    var probe=new Audio();probe.preload='metadata';probe.src='audio/1.mp3';
     probe.addEventListener('error',function(){document.querySelectorAll('.msg audio').forEach(function(a){a.dispatchEvent(new Event('error'))})});
   }
   show();

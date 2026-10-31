@@ -127,8 +127,8 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       .replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\s‌\-\.\/\\•·_+,:،]/g,'').toLowerCase();
   }
   var S={found:[],hints:{}};
-  try{var raw=JSON.parse(localStorage.getItem('sadri-v8')||'null');if(raw&&raw.found)S=raw}catch(e){}
-  function save(){try{localStorage.setItem('sadri-v8',JSON.stringify(S))}catch(e){}}
+  try{var raw=JSON.parse(localStorage.getItem('sadri-v9')||'null');if(raw&&raw.found)S=raw}catch(e){}
+  function save(){try{localStorage.setItem('sadri-v9',JSON.stringify(S))}catch(e){}}
 
   function order(code,label,extra){return '<div class="order"><b>پاکت «'+code+'» را باز کنید.</b><span>'+label+'</span>'+(extra?'<span>'+extra+'</span>':'')+'</div>'}
 
@@ -202,10 +202,12 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
 '<figure class="ph"><img src="gallery/g8.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 23:56</span><span class="pd">روشویی، فلاش تند. زنی با کلاه جادوگر جلوی آینه، دست‌هایش قرمز. روی آینه رد قرمز کشیده شده.</span></figcaption></figure>'+
 '<figure class="ph"><img src="gallery/g9.jpg" alt="" onerror="this.remove()"><figcaption><span class="num">31 10 25 · 00:10</span><span class="pd">کنار در آشپزخانه. زنی با شاخ قرمز، زانوهای شلوارش خاکی، صورتش رنگ‌پریده.</span></figcaption></figure>'+
       '</div>'},
-    i22:{keys:['22'],tag:'ITEM 22',title:'شیء ۲۲: دستکش',html:'<div class="doc"><p>یک دستکش سفید پارچه‌ای، خیس، با لکه‌های قرمز تند. در سینک روشویی طبقه پایین.</p></div>'},
+    i22:{keys:['22'],tag:'ITEM 22',title:'شیء ۲۲: دستکش',html:'<div class="doc"><p>یک دستکش سفید پارچه‌ای، خیس، با لکه‌های قرمز تند. در سینک روشویی طبقه پایین.</p><p>یادداشت نظافتچی: لکه‌ها با آب پاک نشد ولی با تینر رفت. رنگ اکریلیک است، همان رنگی که روی بنرهای تزئینی راهرو کشیده بودند. خون نیست.</p></div>'},
     i27:{keys:['27'],tag:'ITEM 27',title:'شیء ۲۷: جعبه چوبی',html:'<div class="doc"><p>جعبه چوبی کوچک با قفل چهاررقمی، پشت کیسه‌های برنج انباری. شرکت نظافت بازش نکرده.</p></div>'+order('۲۷','جعبه چوبی قفل‌دار','قفل را خودتان باید باز کنید.')},
     i31:{keys:['31'],tag:'ITEM 31',title:'شیء ۳۱: جمجمه تزئینی',needs:'cams',html:
       '<p class="muted">جمجمه با سنسور حرکت. وقتی کسی جلویش رد می‌شد، چند ثانیه صدا ضبط می‌کرد. کارت حافظه با همان سیستم خانه باز شد.</p>'+
+      '<audio controls preload="metadata" src="audio/7.mp3" style="width:100%"></audio>'+
+      '<details><summary class="muted" style="cursor:pointer">رونوشت</summary>'+
       '<div class="tape"><p class="h">REC 23:11:52</p><p class="n">[موسیقی مهمانی، نویز]</p>'+
       '<p class="v1">صدای ۱: ...پولی که به من دادی کافی نیست. اگر بخواهی اسم من را وسط بکشی...</p>'+
       '<p class="v2">صدای ۲: پول؟ پولی که پدرم هر ماه می‌فرستاد را می‌گویی؟</p>'+
@@ -214,8 +216,8 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       '<p class="v2">صدای ۲: ...تو هم با آن‌ها هستی. من فقط آمده‌ام حقم را بگیرم.</p>'+
       '<p class="v1">صدای ۱: حق تو؟ تو که همه چیز را داری!</p>'+
       '<p class="n">[صدای ضربه. چیزی شیشه‌ای می‌شکند. سکوت. موسیقی]</p>'+
-      '<p class="h">REC 23:25:31</p><p class="n">صدای ۳، آهسته: ...نه. نه، نه، نه. این که...</p></div>'},
-    cams:{keys:[],tag:'CCTV 31-10',title:'نسخه پشتیبان دوربین‌ها، شب ۳۱ اکتبر',html:'<p class="muted">هشت فایل. فقط سایه‌ها و ساعت‌ها. ساعت‌ها را کنار هم بگذارید.</p><div class="clips" id="clips"></div>'},
+      '<p class="h">REC 23:25:31</p><p class="n">صدای ۳، آهسته: ...نه. نه، نه، نه. این که...</p></div></details>'},
+    cams:{keys:[],tag:'CCTV 31-10',title:'نسخه پشتیبان دوربین‌ها، شب ۳۱ اکتبر',html:'<p class="muted">شش فایل. فقط ساعت‌ها و حرکت‌ها. ساعت‌ها را کنار هم بگذارید.</p><div class="clips" id="clips"></div>'},
     mother:{keys:['شهراممرادی'],tag:'MISSING · 2025-1187',title:'پرونده مفقودی: شهرام مرادی',html:
       '<p class="muted">این نام در یک پرونده عمومی پلیس و ده‌ها آگهی کاغذی و آنلاین تکرار شده است.</p>'+
       '<div class="doc"><span class="stamp">گمشده</span><p style="font-size:24px;font-family:var(--font-ui);font-weight:800">شهرام مرادی</p>'+
@@ -325,7 +327,6 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
 
   // ---------- CCTV ----------
   var CLIPS=[
-    {n:1,cam:'CAM 02  HALL',start:[22,40,12],dur:8,bg:'hall',actors:[{c:'plain',crouch:true,paint:true,k:[[0,220,1],[8,232,1]]}]},
     {n:2,cam:'CAM 02  HALL',start:[23,4,6],dur:9,bg:'hall',actors:[{c:'cloak',k:[[0,-40,1],[5.5,402,1],[6.6,402,0]]}]},
     {n:3,cam:'CAM 05  GARDEN',start:[23,4,34],dur:8,bg:'garden',actors:[{c:'cloak',k:[[0,250,1],[8,262,1]],smoke:true}]},
     {n:4,cam:'CAM 02  HALL',start:[23,10,1],dur:12,bg:'hall',cut:[6,[23,16,24]],actors:[
@@ -334,7 +335,6 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
     {n:5,cam:'CAM 02  HALL',start:[23,14,40],dur:8,bg:'hall',actors:[{c:'plain',k:[[0,566,0],[0.8,566,1],[1.6,560,1],[2.4,566,1],[6.5,700,1],[8,700,1]]}]},
     {n:6,cam:'CAM 02  HALL',start:[23,25,10],dur:8,bg:'hall',actors:[{c:'cloak',k:[[0,690,1],[5,402,1],[6,402,0]]}]},
     {n:7,cam:'CAM 07  KITCHEN',start:[23,50,31],dur:12,bg:'kitchen',actors:[{c:'plain',crouchUntil:3.4,k:[[0,520,0],[1.6,520,0],[2.2,510,1],[3.4,500,1],[4.2,490,1],[4.8,505,1],[5.6,488,1],[8.4,150,1],[9.4,150,1],[11.4,-50,1]],carry:[2,9]}]},
-    {n:8,cam:'CAM 03  WASHROOM',start:[23,55,2],dur:8,bg:'wash',actors:[{c:'plain',wash:true,k:[[0,330,1],[8,330,1]]}]}
   ];
   var built=false;
   function buildClips(){
@@ -343,7 +343,7 @@ footer{font-size:12px;color:var(--muted);display:flex;justify-content:space-betw
       var d=document.createElement('div');d.className='clip';
       var vid=document.createElement('video');vid.src='videos/clip'+cl.n+'.mp4';vid.controls=true;vid.playsInline=true;vid.preload='metadata';vid.style.cssText='width:100%;aspect-ratio:16/9;background:#000;border-radius:3px;display:block';
       var cv=document.createElement('canvas');cv.width=640;cv.height=360;cv.setAttribute('aria-label','فیلم دوربین '+cl.n);
-      var bar=document.createElement('div');bar.className='clip-bar';var lab=document.createElement('span');lab.textContent='فیلم '+cl.n;
+      var bar=document.createElement('div');bar.className='clip-bar';var lab=document.createElement('span');lab.textContent=cl.cam.replace(/\s+/g,' ')+' · '+(function(t){return (t[0]<10?'0':'')+t[0]+':'+(t[1]<10?'0':'')+t[1]})(cl.start);
       var btn=document.createElement('button');btn.type='button';btn.className='ghost';btn.textContent='پخش';
       bar.appendChild(lab);bar.appendChild(btn);d.appendChild(vid);d.appendChild(bar);box.appendChild(d);
       cv.hidden=true;d.insertBefore(cv,bar);
